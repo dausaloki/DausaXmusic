@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+printf '\n🎵 DausaXmusic setup\n\n'
+if ! command -v python3.12 >/dev/null 2>&1; then
+  echo 'Python 3.12 is required. Install Python 3.12 and FFmpeg first.' >&2
+  exit 1
+fi
+if ! command -v ffmpeg >/dev/null 2>&1; then
+  echo 'FFmpeg is required. Install it before continuing.' >&2
+  exit 1
+fi
+
+if [ ! -f .env ]; then
+  cp sample.env .env
+  echo 'Created .env from sample.env. Edit it and add your private credentials.'
+fi
+python3.12 -m venv .venv
+. .venv/bin/activate
+python -m pip install --upgrade pip
+pip install -r requirements.txt
+printf '\nSetup complete. Edit .env, then run: python -m DAUSAXMUSIC\n'

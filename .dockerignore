@@ -1,0 +1,14 @@
+.git
+.github
+.env
+*.session
+*.session-journal
+__pycache__
+*.pyc
+.cache
+cache
+logs
+log.txt
+downloads
+couples
+DAUSAXMUSIC/assets/cookies.txt

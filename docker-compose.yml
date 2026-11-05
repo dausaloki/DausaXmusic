@@ -1,0 +1,32 @@
+services:
+  dausaxmusic:
+    build: .
+    container_name: dausaxmusic
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      MONGO_DB_URI: ${MONGO_DB_URI:-mongodb://mongo:27017/DausaXmusic}
+      LOG_FILE: /app/log/dausaxmusic.log
+    volumes:
+      - ./downloads:/app/downloads
+      - ./cache:/app/cache
+      - ./log:/app/log
+    depends_on:
+      mongo:
+        condition: service_healthy
+  mongo:
+    image: mongo:7
+    container_name: dausaxmusic-mongo
+    restart: unless-stopped
+    volumes:
+      - mongo_data:/data/db
+    healthcheck:
+      test: ["CMD", "mongosh", "--quiet", "--eval", "db.adminCommand('ping').ok"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    environment:
+      MONGO_INITDB_DATABASE: DausaXmusic
+    # Keep MongoDB private; do not publish port 27017 to the public internet.
+volumes:
+  mongo_data:
