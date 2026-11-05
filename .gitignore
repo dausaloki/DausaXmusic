@@ -18,3 +18,4 @@ coverage.xml
 .pytest_cache/
 .venv/
 venv/
+DAUSAXMUSIC/assets/cookies.txt
