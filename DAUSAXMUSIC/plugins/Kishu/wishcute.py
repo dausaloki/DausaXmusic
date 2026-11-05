@@ -13,7 +13,7 @@ SUPPORT_BTN = (
     if config.SUPPORT_CHAT else None
 )
 
-CUTE_VIDEO = str(Path(__file__).resolve().parents[2] / "assets" / "dausa" / "cute.mp4")
+CUTE_VIDEO = str(Path(__file__).resolve().parents[2] / "assets" / "vivaan" / "cute.mp4")
 NEKOS_BEST_HEADERS = {
     "Accept": "application/json",
     "User-Agent": "DausaXmusicBot",

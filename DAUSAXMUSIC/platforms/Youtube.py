@@ -15,10 +15,6 @@ from pyrogram.types import Message
 from requests.adapters import HTTPAdapter
 from urllib3.util.retry import Retry
 from youtubesearchpython.__future__ import VideosSearch
-try:
-    from youtubesearchpython.__future__.extras import Recommendations
-except ImportError:
-    Recommendations = None
 import base64
 from DAUSAXMUSIC import LOGGER
 from DAUSAXMUSIC.utils.database import is_on_off
@@ -518,27 +514,19 @@ class YouTubeAPI:
             )
 
         async def legacy_autoplay():
-            candidates = []
-            if videoid and Recommendations is not None:
-                try:
-                    candidates = await Recommendations.get(videoid, timeout=5) or []
-                except Exception as err:
-                    logger.warning(
-                        "Autoplay recommendations failed for %s: %s", videoid, err
-                    )
-
-            if not candidates:
-                query = self._clean_autoplay_query(title)
-                if not query:
-                    return None
-                try:
-                    search = VideosSearch(query, limit=12)
-                    candidates = (await search.next()).get("result", [])
-                except Exception as err:
-                    logger.warning(
-                        "Autoplay fallback search failed for %s: %s", query, err
-                    )
-                    return None
+            # youtube-search-python 1.6.6 has no Recommendations class.
+            # Its supported async VideosSearch API provides the fallback.
+            query = self._clean_autoplay_query(title)
+            if not query:
+                return None
+            try:
+                search = VideosSearch(query, limit=12)
+                candidates = (await search.next()).get("result", [])
+            except Exception as err:
+                logger.warning(
+                    "Autoplay fallback search failed for %s: %s", query, err
+                )
+                return None
             return await self._resolve_autoplay_candidates(
                 candidates, videoid, max_duration
             )

@@ -72,7 +72,7 @@ def builder_namespace(filename, names=None):
     namespace = dict(vars(styles))
     namespace.update(InlineKeyboardButton=InlineKeyboardButton, InlineKeyboardMarkup=InlineKeyboardMarkup,
                      app=SimpleNamespace(username="existing_bot"),
-                     config=SimpleNamespace(OWNER_ID=12345, SUPPORT_CHAT="https://t.me/support", SUPPORT_CHANNEL="https://t.me/channel"),
+                     config=SimpleNamespace(OWNER_ID=12345, SUPPORT_CHAT="https://t.me/support", SUPPORT_CHANNEL="https://t.me/channel", INSTAGRAM_URL="https://instagram.com/lokesh_dausa1"),
                      SUPPORT_CHAT="https://t.me/support", Union=__import__("typing").Union,
                      time=__import__("time"), Message=Message,
                      LyricsSearchSession=SimpleNamespace, LyricsCandidate=SimpleNamespace)
@@ -178,7 +178,7 @@ class LayoutTest(unittest.TestCase):
                     menus.append(queue["queue_markup"](strings, duration, "g", "video", "0:20", "3:00"))
                 for menu in menus:
                     self.assert_preserved(menu)
-                self.assertEqual([len(r) for r in keyboard(start["private_panel"](strings)).inline_keyboard], [1, 2, 1])
+                self.assertEqual([len(r) for r in keyboard(start["private_panel"](strings)).inline_keyboard], [1, 2, 2])
 
     def test_conditional_lyrics_and_voiceplay_keyboards(self):
         lyrics = builder_namespace("plugins/tools/lyrics.py", {"_truncate_label", "_result_label", "_build_results_markup", "_build_lyrics_markup"})

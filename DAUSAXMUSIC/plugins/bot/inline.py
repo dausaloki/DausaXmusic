@@ -2,7 +2,7 @@ from pyrogram.types import (
     InlineKeyboardButton,
     InlineKeyboardMarkup,
 )
-from youtubesearchpython.future import VideosSearch
+from youtubesearchpython.__future__ import VideosSearch
 
 from DAUSAXMUSIC.utils.inlinequery import answer
 from DAUSAXMUSIC.button_styles import primary_button

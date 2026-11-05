@@ -154,7 +154,7 @@ class Userbot:
             LOGGER(__name__).error(
                 "No assistants started. Check STRING_SESSION values and assistant logs."
             )
-            exit()
+            raise RuntimeError("No assistant started; check STRING_SESSION values.")
         LOGGER(__name__).info(f"Assistants ready: {', '.join(map(str, assistants))}")
 
     async def stop(self):

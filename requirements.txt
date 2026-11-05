@@ -7,10 +7,12 @@ deepai
 edge-tts
 gitpython
 gradio_client==2.6.0
-gpytranslate
+# 1.5.1 retains the Translator API used by plugins/tools/tr.py and supports HTTPX 0.27.
+gpytranslate==1.5.1
 gtts
 heroku3
-httpx[http2]==0.28.1
+# youtube-search-python 1.6.6 still uses the HTTPX proxies= API removed in 0.28.
+httpx[http2]==0.27.2
 indic-transliteration
 kurigram==2.2.26
 motor
@@ -33,6 +35,8 @@ qrcode
 requests
 rlottie-python==1.3.8
 speedtest-cli
+# heroku3 5.2.1 imports six without declaring it in its package metadata.
+six==1.17.0
 SpeechRecognition
 spotipy
 tgcrypto

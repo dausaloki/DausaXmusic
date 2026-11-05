@@ -22,7 +22,7 @@ async def download_repo(client: Client, message: Message):
     if len(message.command) != 2:
         return await message.reply_text(
             "Please provide a GitHub repository URL.\n\n"
-            "Example: `/downloadrepo https://github.com/YOUR_GITHUB_USERNAME/DausaXmusic`",
+            "Example: `/downloadrepo https://github.com/dausaloki/DausaXmusic`",
             parse_mode=ParseMode.MARKDOWN,
         )
 

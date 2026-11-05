@@ -1,4 +1,3 @@
-import sys
 from pyrogram import Client, errors
 from pyrogram.enums import ChatMemberStatus
 
@@ -38,18 +37,21 @@ class JARVIS(Client):
             )
         except (errors.ChannelInvalid, errors.PeerIdInvalid):
             LOGGER(__name__).error("❌ Bot cannot access the log group/channel – add & promote it first!")
-            sys.exit()
+            raise RuntimeError("Bot cannot access LOGGER_ID; add and promote it first.") from None
         except Exception as exc:
             LOGGER(__name__).error(f"❌ Bot has failed to access the log group.\nReason: {type(exc).__name__}")
-            sys.exit()
+            raise RuntimeError("Bot could not send the startup message to LOGGER_ID.") from None
 
         try:
             member = await self.get_chat_member(config.LOGGER_ID, self.id)
-            if member.status != ChatMemberStatus.ADMINISTRATOR:
-                LOGGER(__name__).error("❌ Promote the bot as admin in the log group/channel.")
-                sys.exit()
-        except Exception as e:
-            LOGGER(__name__).error(f"❌ Could not check admin status: {e}")
-            sys.exit()
+        except Exception as exc:
+            LOGGER(__name__).error(
+                "❌ Could not check log-group admin status (%s).",
+                type(exc).__name__,
+            )
+            raise RuntimeError("Could not verify bot admin status in LOGGER_ID.") from None
+        if member.status != ChatMemberStatus.ADMINISTRATOR:
+            LOGGER(__name__).error("❌ Promote the bot as admin in the log group/channel.")
+            raise RuntimeError("Bot must be an administrator in LOGGER_ID.")
 
         LOGGER(__name__).info(f"✅ Music Bot started as {self.name} (@{self.username})")

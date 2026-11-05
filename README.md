@@ -53,11 +53,14 @@ python -m DAUSAXMUSIC
 
 ## Railway
 
-1. Create a private GitHub repository named `DausaXmusic` and upload this project.
-2. Create a Railway project from that repository.
-3. Add the required values from `sample.env` under Railway Variables.
+1. Upload the corrected project contents to your GitHub repository; keep `Dockerfile` and `railway.json` at the repository root. See `GITHUB_UPLOAD.md`.
+2. Create a Railway project from that repository and leave Root Directory empty or `/`.
+3. Add the required values from `sample.env` under Railway Variables. The complete 86-variable reference is in `ENVIRONMENT_VARIABLES.md`.
 4. Use MongoDB Atlas or another reachable MongoDB service.
-5. Deploy and inspect logs. A successful image build alone does not prove that Telegram login, assistant sessions, database access or voice calls work.
+5. Follow the Hindi guide `RAILWAY_DEPLOYMENT_HI.md` and the live `DEPLOYMENT_CHECKLIST.md`.
+6. Deploy and inspect logs. A successful image build alone does not prove that Telegram login, assistant sessions, database access or voice calls work.
+
+The source-audit changes, performed tests, and unperformed live checks are documented in `AUDIT_REPORT.md`.
 
 ## Docker / VPS
 

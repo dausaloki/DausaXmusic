@@ -1,21 +1,60 @@
-# DausaXmusic deployment checklist
+# DausaXmusic final deployment verification checklist
 
-## Before first boot
-- [ ] Rotate any exposed upstream credentials; use your own Telegram API ID/hash and bot token.
-- [ ] Configure `API_ID`, `API_HASH`, `BOT_TOKEN`, `OWNER_ID`, `LOGGER_ID`, `MONGO_DB_URI`, and at least one `STRING_SESSION`.
-- [ ] Add the bot to the private log chat/channel and promote it with required permissions.
-- [ ] Confirm the assistant account can access the target group voice chats.
-- [ ] Configure `SUPPORT_CHAT` and `SUPPORT_CHANNEL` with valid URLs.
-- [ ] Configure optional provider credentials only if required.
-- [ ] Keep `.env`, session strings, and cookies out of Git.
+This is the live deployment checklist. For the tests actually performed during the source audit, see `AUDIT_REPORT.md`; do not treat unchecked live items below as already verified.
 
-## After deploy
-- [ ] Confirm bot startup message appears in logs.
-- [ ] Confirm `/start`, `/help`, and `/ping` work.
-- [ ] Confirm `/play` and `/queue` in a test group with an active voice chat.
-- [ ] Test pause, resume, skip, stop, autoplay, and channel play.
-- [ ] Test `/favorite`, `/favorites`, and `/unfavorite` in private chat.
-- [ ] Test playlist create/add/show/remove/delete.
-- [ ] Test owner `/health` and user `/report`.
-- [ ] Confirm MongoDB data persists after a restart.
-- [ ] Check CPU/RAM/disk and Railway/VPS restart behavior under load.
+## Source and repository
+
+- [ ] Repository root directly contains `Dockerfile`, `railway.json`, `requirements.txt`, `config.py`, `sample.env`, and `DAUSAXMUSIC/`.
+- [ ] No extra nested project root was uploaded.
+- [ ] Redundant `Readme.md` and non-source artifacts were removed; the real `README.md` remains.
+- [ ] `.env`, cookies, Telegram sessions, API secrets, private tokens, and database credentials are absent from Git.
+- [ ] GitHub Actions completed successfully, including FFmpeg, dependency, compilation, import-guard, and test steps.
+
+## Before first Railway boot
+
+- [ ] Rotate any credential that was ever exposed publicly.
+- [ ] Set `API_ID`, `API_HASH`, `BOT_TOKEN`, `LOGGER_ID`, and `MONGO_DB_URI` in Railway Variables.
+- [ ] Set at least one valid assistant session: `STRING_SESSION` or one of `STRING_SESSION2` through `STRING_SESSION5`.
+- [ ] Confirm `OWNER_ID=1236703127` and the preserved bot/owner branding.
+- [ ] Confirm `BOT_USERNAME=DAUSA_MUSIC1_BOT` without `@`.
+- [ ] Confirm `SUPPORT_CHAT=https://t.me/DAUSA_123` and `SUPPORT_CHANNEL=https://t.me/kalam_se`.
+- [ ] Add the bot to the private log chat/channel and promote it to administrator.
+- [ ] Confirm the assistant account can access the target groups and voice chats.
+- [ ] Confirm MongoDB credentials and network access from Railway.
+- [ ] Configure optional provider credentials only for features actually being used.
+- [ ] Leave Railway Root Directory empty or `/`; use the root Dockerfile and `python -m DAUSAXMUSIC`.
+- [ ] Keep failure retries bounded; do not replace the configured policy with an unbounded crash loop.
+
+## Build and startup logs
+
+- [ ] Docker build completed with Python 3.12 and FFmpeg/FFprobe available.
+- [ ] Dependency installation completed without resolver conflicts.
+- [ ] No `ModuleNotFoundError` occurred (including `six` or `youtubesearchpython.future`).
+- [ ] No HTTPX `unexpected keyword argument 'proxies'` error occurred during YouTube search.
+- [ ] Required-variable validation did not report a missing setting.
+- [ ] `Modules loaded.` appeared.
+- [ ] `DausaXmusic started successfully.` appeared.
+- [ ] The bot posted its startup message to `LOGGER_ID`.
+
+## Live Telegram and music checks
+
+- [ ] `/start`, `/help`, and `/ping` work.
+- [ ] The assistant joins a test group voice chat.
+- [ ] `/play` produces audible audio and `/queue` shows the correct current track.
+- [ ] Pause, resume, skip, stop, seek, loop, shuffle, speed, and autoplay work as expected.
+- [ ] `/vplay` and video playback work.
+- [ ] Queue list/back buttons and the corrected queue welcome image work.
+- [ ] `/lyrics`, song download, and thumbnail generation work.
+- [ ] `/favorite`, `/favorites`, and `/unfavorite` work in private chat.
+- [ ] Playlist create/add/show/remove/delete flows work.
+- [ ] Couple and cute-wish commands use their existing `assets/vivaan` media correctly.
+- [ ] Owner `/health` and user `/report` work.
+- [ ] Optional Voice Play and AI/provider features are tested separately when configured.
+
+## Persistence and operations
+
+- [ ] MongoDB settings/data persist after a restart.
+- [ ] No repeating crash/restart pattern appears in Railway logs.
+- [ ] CPU, RAM, open files, and disk use remain within service limits during playback.
+- [ ] Ephemeral cache/log growth is understood; persistent data is not stored only in the container filesystem.
+- [ ] Third-party provider outages are distinguished from bot startup failures.

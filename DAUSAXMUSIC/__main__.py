@@ -73,7 +73,7 @@ async def init():
         LOGGER(__name__).error(
             "Assistant session not filled, please fill a Pyrogram session."
         )
-        exit()
+        raise RuntimeError("At least one assistant STRING_SESSION is required.")
 
     await sudo()
 

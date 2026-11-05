@@ -1,12 +1,12 @@
-import os
 import aiohttp
 from pyrogram import filters
 from pyrogram.enums import ParseMode
 from pyrogram.types import Message
 
+import config
 from DAUSAXMUSIC import app
 
-API_KEY = os.getenv("PHONE_LOOKUP_API_KEY", "")
+API_KEY = config.PHONE_LOOKUP_API_KEY
 API_URL = "https://apilayer.net/api/validate"
 
 

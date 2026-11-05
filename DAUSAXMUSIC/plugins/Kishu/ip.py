@@ -1,4 +1,4 @@
-import os
+import config
 from pyrogram import filters
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from DAUSAXMUSIC import app
@@ -9,8 +9,8 @@ import ipaddress
 import html
 from DAUSAXMUSIC.utils.rich_buttons import rich_call
 
-IPINFO_TOKEN = os.getenv("IPINFO_TOKEN", "")
-IPQUALITYSCORE_API_KEY = os.getenv("IPQUALITYSCORE_API_KEY", "")
+IPINFO_TOKEN = config.IPINFO_TOKEN
+IPQUALITYSCORE_API_KEY = config.IPQUALITYSCORE_API_KEY
 PROXYCHECK_API_URL = "https://proxycheck.io/v2"
 
 # ---------- Helpers ----------

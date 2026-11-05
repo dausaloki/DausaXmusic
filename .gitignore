@@ -16,6 +16,7 @@ downloads/
 couples/
 coverage.xml
 .pytest_cache/
+.ruff_cache/
 .venv/
 venv/
-DAUSAXMUSIC/assets/cookies.txt
+cookies.txt

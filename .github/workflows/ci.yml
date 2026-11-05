@@ -10,9 +10,21 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - name: Install FFmpeg
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg
       - name: Compile all Python modules
-        run: python -m compileall -q DAUSAXMUSIC strings config.py
+        run: python -m compileall -q DAUSAXMUSIC strings scripts tests config.py
       - name: Install project dependencies
         run: pip install -r requirements.txt pytest
+      - name: Check dependency consistency
+        run: pip check
+      - name: Verify YouTube Search imports
+        run: |
+          if grep -RIn --include='*.py' 'youtubesearchpython\.future' DAUSAXMUSIC; then
+            echo 'Unsupported youtubesearchpython.future import found.'
+            exit 1
+          fi
       - name: Run tests
         run: python -m pytest -q

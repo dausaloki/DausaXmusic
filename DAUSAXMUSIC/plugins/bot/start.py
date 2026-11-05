@@ -9,7 +9,7 @@ from pyrogram.types import (
     InlineKeyboardMarkup,
     Message,
 )
-from youtubesearchpython.future import VideosSearch
+from youtubesearchpython.__future__ import VideosSearch
 
 import config
 from DAUSAXMUSIC import app

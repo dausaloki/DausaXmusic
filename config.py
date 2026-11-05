@@ -59,6 +59,9 @@ ELITE_LLM_API_KEY = getenv("ELITE_LLM_API_KEY", "")
 ESSE_API_URL = getenv("ESSE_API_URL", "")
 ESSE_API_KEY = getenv("ESSE_API_KEY", "")
 ESSE_TIMEOUT = getenv("ESSE_TIMEOUT", "20")
+PHONE_LOOKUP_API_KEY = getenv("PHONE_LOOKUP_API_KEY", "")
+IPINFO_TOKEN = getenv("IPINFO_TOKEN", "")
+IPQUALITYSCORE_API_KEY = getenv("IPQUALITYSCORE_API_KEY", "")
 
 # Vars For API End Pont.
 YTPROXY_URL = getenv("YTPROXY_URL", "") ## Optional xBit fallback endpoint.

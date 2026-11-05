@@ -109,7 +109,7 @@ class PublicAITest(unittest.IsolatedAsyncioTestCase):
             await ai._ensure_local_image("data:image/png;base64," + base64.b64encode(b"<html>Error</html>").decode())
 
     async def test_video_output_keeps_mp4_extension_and_preserves_shared_file(self):
-        source = ROOT / "DAUSAXMUSIC/assets/dausa/cute.mp4"
+        source = ROOT / "DAUSAXMUSIC/assets/vivaan/cute.mp4"
         output = Path(await ai._ensure_local_video(str(source)))
         try:
             self.assertEqual(output.suffix, ".mp4")

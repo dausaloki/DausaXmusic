@@ -1,5 +1,6 @@
 import ast
 import importlib.util
+import json
 import logging
 from pathlib import Path
 from unittest import IsolatedAsyncioTestCase
@@ -52,7 +53,7 @@ class EsseAutoplayTest(IsolatedAsyncioTestCase):
             self.assertEqual(str(request.url), "https://esse.example/v1/recommend")
             self.assertEqual(request.headers["Authorization"], "Bearer test-secret")
             self.assertEqual(
-                request.read(), b'{"song":"Perfect","limit":5}'
+                json.loads(request.read()), {"song": "Perfect", "limit": 5}
             )
             return httpx.Response(200, json=response_payload())
 
@@ -195,7 +196,11 @@ class EsseAutoplayTest(IsolatedAsyncioTestCase):
 
     async def test_secret_is_not_written_to_failure_logs(self):
         secret = "never-log-this-test-secret"
-        with patch.multiple(esse, ESSE_API_KEY=secret), self.client_patch(
+        with patch.multiple(
+            esse,
+            ESSE_API_KEY=secret,
+            ESSE_API_URL="https://esse.example",
+        ), self.client_patch(
             lambda request: httpx.Response(401, request=request)
         ), self.assertLogs(esse.logger, level=logging.WARNING) as captured:
             await esse.get_recommendations("Perfect")
