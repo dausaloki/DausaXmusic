@@ -8,7 +8,7 @@ deepai
 deno==2.9.8
 edge-tts
 gitpython
-gradio_client==2.6.0
+gradio_client==2.7.2
 # 1.5.1 retains the Translator API used by plugins/tools/tr.py and supports HTTPX 0.27.
 gpytranslate==1.5.1
 gtts
