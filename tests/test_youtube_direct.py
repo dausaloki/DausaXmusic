@@ -57,6 +57,10 @@ def _load_youtube_module():
             and url.startswith("https://")
             and len(url) <= 4096,
         ),
+        "DAUSAXMUSIC.utils.youtube_cookies": _module(
+            "DAUSAXMUSIC.utils.youtube_cookies",
+            get_youtube_cookie_file=lambda: None,
+        ),
         "DAUSAXMUSIC.security": _module(
             "DAUSAXMUSIC.security", build_subprocess_env=lambda: dict(os.environ)
         ),
@@ -212,6 +216,32 @@ class DirectYouTubePlaybackTest(IsolatedAsyncioTestCase):
         self.assertNotIn("cookiefile", options)
         self.assertNotIn("po_token", str(options).lower())
         self.assertEqual(SOURCE_EVENTS[-1], ("abc123", "direct yt-dlp ok (audio)"))
+
+    async def test_direct_extraction_uses_operator_cookie_file_when_configured(self):
+        with _temporary_working_directory(), patch.object(
+            youtube,
+            "get_youtube_cookie_file",
+            return_value="/tmp/operator-owned-cookies.txt",
+        ), patch.object(
+            youtube,
+            "validate_playable_stream_url",
+            AsyncMock(return_value=True),
+        ):
+            result = await self.api.download(
+                "abc123",
+                None,
+                videoid=True,
+                stream=True,
+                title="Test Song",
+            )
+            await self._cancel_background_cache()
+
+        self.assertEqual(result[1], False)
+        options = FakeYoutubeDL.instances[0].options
+        self.assertEqual(
+            options["cookiefile"], "/tmp/operator-owned-cookies.txt"
+        )
+        self.assertNotIn("po_token", str(options).lower())
 
     async def test_video_stream_requires_one_combined_media_url(self):
         with _temporary_working_directory(), patch.object(

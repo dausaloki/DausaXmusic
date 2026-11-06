@@ -33,12 +33,12 @@
       "value": ""
     },
     "OWNER_ID": {
-      "description": "Your Telegram numeric user ID (use @userinfobot to find it). Multiple IDs can be separated by a space.",
+      "description": "DausaXmusic owner's numeric Telegram user ID.",
       "required": true,
-      "value": ""
+      "value": "1236703127"
     },
     "STRING_SESSION": {
-      "description": "Pyrogram v2 session string. Generate it securely from https://telegram.tools/session-string-generator#pyrogram.",
+      "description": "Authorized Kurigram/Pyrogram session string generated locally for your assistant account; never use an untrusted session-generator website.",
       "value": "",
       "required": true
     },
@@ -48,7 +48,7 @@
       "value": ""
     },
     "COOKIE_URL": {
-      "description": "Direct raw link (from Batbin or Pastebin) to your YouTube cookies.txt file for better download support.",
+      "description": "Optional private HTTPS URL for your own authorized Netscape YouTube cookie export. Leave blank for anonymous playback; never use a public paste.",
       "required": false,
       "value": ""
     },
@@ -61,6 +61,11 @@
       "description": "Maximum number of tracks imported from one playlist request.",
       "required": false,
       "value": "10"
+    },
+    "YTPROXY_URL": {
+      "description": "(Optional) Base URL for your authorized xBit-compatible media fallback; leave blank for direct yt-dlp.",
+      "required": false,
+      "value": ""
     },
     "YT_API_KEY": {
       "description": "(Optional) API key associated with your primary xBit music API endpoint.",
@@ -78,12 +83,17 @@
       "value": "1000"
     },
     "YOUTUBE_STREAM_HTTP_PROBE_TIMEOUT": {
-      "description": "Seconds to wait for the first byte from a Worker media stream.",
+      "description": "Seconds to wait for the first byte from a direct yt-dlp or authorized Worker media stream.",
       "required": false,
       "value": "15"
     },
+    "YOUTUBE_STREAM_PREFLIGHT": {
+      "description": "Set 1 to validate direct/Worker audio with FFmpeg before playback; recommended default.",
+      "required": false,
+      "value": "1"
+    },
     "YOUTUBE_STREAM_PREFLIGHT_TIMEOUT": {
-      "description": "Seconds allowed for Worker stream audio validation.",
+      "description": "Seconds allowed for direct/Worker stream audio validation.",
       "required": false,
       "value": "15"
     },
@@ -122,6 +132,11 @@
       "required": false,
       "value": ""
     },
+    "WORKER_FALLBACK_API_URL": {
+      "description": "Optional base URL for your own authorized Worker media fallback; upstream credentials are not included.",
+      "required": false,
+      "value": ""
+    },
     "WORKER_FALLBACK_API_KEY": {
       "description": "Optional key for your authorized media API provider.",
       "required": false,
@@ -145,17 +160,17 @@
     "BOT_USERNAME": {
       "description": "BotFather username without @.",
       "required": true,
-      "value": ""
+      "value": "DAUSA_MUSIC1_BOT"
     },
     "SUPPORT_CHAT": {
       "description": "Your Telegram support group URL.",
       "required": true,
-      "value": ""
+      "value": "https://t.me/DAUSA_123"
     },
     "SUPPORT_CHANNEL": {
       "description": "Your Telegram updates channel URL.",
       "required": true,
-      "value": ""
+      "value": "https://t.me/kalam_se"
     }
   },
   "buildpacks": [

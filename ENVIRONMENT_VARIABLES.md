@@ -36,7 +36,7 @@ This inventory was generated from the audited `sample.env`, `config.py`, and dir
 | `PLAYLIST_FETCH_LIMIT` | Optional | Maximum tracks imported from a playlist request. | Set a positive integer; sample default is 10. | `10` |
 | `TG_AUDIO_FILESIZE_LIMIT` | Optional | Maximum Telegram audio file size accepted, in bytes. | Set an integer byte limit; keep the sample default unless needed. | `157286400` |
 | `TG_VIDEO_FILESIZE_LIMIT` | Optional | Maximum Telegram video file size accepted, in bytes. | Set an integer byte limit; keep the sample default unless needed. | `1288490189999` |
-| `COOKIE_URL` | Optional | Legacy declared cookie URL; no active Python consumer was found in this revision. No cookie file is bundled. | Leave blank. Never publish private cookies or place them in Git. | `Blank` |
+| `COOKIE_URL` | Optional | Loads your own authorized Netscape YouTube cookie export for supported yt-dlp paths. Public HTTPS only, 1 MiB maximum, private runtime file; no cookie is bundled. | Leave blank for anonymous playback. If needed, use a private HTTPS location you control; never a public paste, another person's cookies, or Git. | `Blank` |
 | `SPOTIFY_CLIENT_ID` | Optional | Spotify application client ID for Spotify metadata integration. | Spotify Developer Dashboard → your app. | `Blank` |
 | `SPOTIFY_CLIENT_SECRET` | Optional | Spotify application client secret. | Spotify Developer Dashboard → your app; keep private. | `Blank` |
 | `YTPROXY_URL` | Optional | Base URL for the authorized xBit-compatible YouTube fallback endpoint. | Your authorized media API provider; leave blank for normal yt-dlp paths. | `Blank` |

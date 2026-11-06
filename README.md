@@ -55,14 +55,16 @@ python -m DAUSAXMUSIC
 
 1. Upload the corrected project contents to your GitHub repository; keep `Dockerfile` and `railway.json` at the repository root. See `GITHUB_UPLOAD.md`.
 2. Create a Railway project from that repository and leave Root Directory empty or `/`.
-3. Add the required values from `sample.env` under Railway Variables. The complete 86-variable reference is in `ENVIRONMENT_VARIABLES.md`.
+3. Add the required values from `sample.env` under Railway Variables. Exact keep/change decisions are in `RAILWAY_VARIABLES_FINAL.md`; the complete 86-variable reference is in `ENVIRONMENT_VARIABLES.md`.
 4. Use MongoDB Atlas or another reachable MongoDB service.
 5. Follow the Hindi guide `RAILWAY_DEPLOYMENT_HI.md` and the live `DEPLOYMENT_CHECKLIST.md`.
 6. Deploy and inspect logs. A successful image build alone does not prove that Telegram login, assistant sessions, database access or voice calls work.
 
-YouTube voice-chat playback now tries direct yt-dlp first, with no Worker or xBit API required. Deno and the local EJS component are pinned in `requirements.txt`; existing optional API fallbacks remain available. See `PLAYBACK_FIX_REPORT.md` for the exact root cause and real song-name/URL extraction tests.
+YouTube voice-chat playback tries direct yt-dlp first, with no Worker or xBit API required. The rebuild pins yt-dlp 2026.10.26, Deno 2.9.8 and yt-dlp-ejs 0.8.0; existing optional authorized API fallbacks remain available. Existing `COOKIE_URL` is now an optional secure consumer for your own Netscape cookie export; it stays blank by default and no cookies are bundled.
 
-The original source-audit changes are documented in `AUDIT_REPORT.md`, and the latest playback repair and verification results are in `PLAYBACK_FIX_REPORT.md`.
+The supplied Railway evidence shows a separate YouTube HTTP 429/sign-in challenge after successful startup. Sandbox song-name, watch-URL, media-download and FFmpeg checks pass, but they do not guarantee playback from Railway's IP. See `COMPLETE_REBUILD_REPORT.md` for the three-source comparison, exact changes, security results and external limitations; `PLAYBACK_FIX_REPORT.md` retains the earlier PR #6 diagnosis.
+
+The original source-audit changes are documented in `AUDIT_REPORT.md`. Railway variables and live checks are in `RAILWAY_DEPLOYMENT_HI.md` and `DEPLOYMENT_CHECKLIST.md`.
 
 ## Docker / VPS
 

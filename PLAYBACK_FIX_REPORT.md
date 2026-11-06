@@ -1,5 +1,7 @@
 # DausaXmusic YouTube playback — root cause and consolidated fix
 
+> **Historical PR #6 report:** this documents the earlier direct-playback patch and its then-current versions. The final three-source rebuild, optional authorized `COOKIE_URL` consumer, updated yt-dlp/Deno versions and Railway 429 evidence are in `COMPLETE_REBUILD_REPORT.md`.
+
 **Audit/fix date:** 2026-11-06  
 **GitHub baseline inspected:** `8cde05e13372e2c237afc3e5cdc4b3f1aee98e68` (`main`)  
 **Repository:** https://github.com/dausaloki/DausaXmusic

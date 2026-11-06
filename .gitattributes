@@ -2,3 +2,4 @@
 setup text eol=lf
 start text eol=lf
 Procfile text eol=lf
+FINAL_BUILD_INFO.md export-subst

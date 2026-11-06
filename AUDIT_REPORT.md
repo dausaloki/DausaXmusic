@@ -1,5 +1,7 @@
 # DausaXmusic complete project audit and Railway fix
 
+> **Historical 2026-11-05 audit:** version counts and the then-unused `COOKIE_URL` statement below describe that earlier snapshot. The final migration, current runtime and active secure cookie support are documented in `COMPLETE_REBUILD_REPORT.md`.
+
 **Audit date:** 2026-11-05  
 **Original GitHub snapshot audited:** `7d9d5b01734446e429aef06fa410b66990e647a8`  
 **Target runtime:** Python 3.12 (tested with CPython 3.12.16)  

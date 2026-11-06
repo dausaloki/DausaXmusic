@@ -1,4 +1,4 @@
-"""DausaXmusic playback cards with Ruhu's artwork-derived lighting palette."""
+"""DausaXmusic playback cards with artwork-derived lighting."""
 
 import colorsys
 import math
