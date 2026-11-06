@@ -28,6 +28,7 @@ This is the live deployment checklist. For the tests actually performed during t
 ## Build and startup logs
 
 - [ ] Docker build completed with Python 3.12 and FFmpeg/FFprobe available.
+- [ ] Build-time `deno --version`, `yt_dlp_ejs` import, and FFmpeg checks passed.
 - [ ] Dependency installation completed without resolver conflicts.
 - [ ] No `ModuleNotFoundError` occurred (including `six` or `youtubesearchpython.future`).
 - [ ] No HTTPX `unexpected keyword argument 'proxies'` error occurred during YouTube search.
@@ -40,7 +41,10 @@ This is the live deployment checklist. For the tests actually performed during t
 
 - [ ] `/start`, `/help`, and `/ping` work.
 - [ ] The assistant joins a test group voice chat.
-- [ ] `/play` produces audible audio and `/queue` shows the correct current track.
+- [ ] `/play <song name>` produces audible audio and `/queue` shows the correct current track.
+- [ ] `/play <public YouTube watch URL>` also produces audible audio for the same test track.
+- [ ] Logs show `Direct yt-dlp format selected` and `YouTube source ok | source=direct_ytdlp` without requiring Worker/xBit credentials.
+- [ ] If a source fails, inspect the first sanitized direct-extraction/preflight error rather than only the final generic message.
 - [ ] Pause, resume, skip, stop, seek, loop, shuffle, speed, and autoplay work as expected.
 - [ ] `/vplay` and video playback work.
 - [ ] Queue list/back buttons and the corrected queue welcome image work.

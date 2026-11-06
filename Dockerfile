@@ -13,7 +13,10 @@ RUN apt-get update && \
 WORKDIR /app
 COPY requirements.txt .
 RUN python -m pip install --upgrade pip && \
-    pip install -r requirements.txt
+    pip install -r requirements.txt && \
+    python -c "import yt_dlp, yt_dlp_ejs" && \
+    deno --version && \
+    ffmpeg -version > /dev/null
 
 COPY . .
 CMD ["python", "-m", "DAUSAXMUSIC"]

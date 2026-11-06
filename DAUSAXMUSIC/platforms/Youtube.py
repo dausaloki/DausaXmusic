@@ -63,6 +63,14 @@ WORKER_FALLBACK_API_RETRY_DELAY_MS = min(
     5000,
     max(0, int_env("WORKER_FALLBACK_API_RETRY_DELAY_MS", 1000)),
 )
+YTDLP_EXTRACTION_TIMEOUT = max(10, int_env("YTDLP_TIMEOUT", 45))
+
+
+def safe_yt_dlp_error(exc: BaseException) -> str:
+    """Keep diagnostics useful without logging signed media URLs or credentials."""
+    reason = re.sub(r"https?://\S+", "<redacted-url>", str(exc))
+    return f"{type(exc).__name__}: {reason[:400]}"
+
 
 def build_yt_dlp_args(args: list[str]) -> list[str]:
     return list(args)
@@ -419,9 +427,12 @@ class YouTubeAPI:
         args = build_yt_dlp_args(["yt-dlp"])
         args.extend(
             [
+                "--extractor-args",
+                "youtube:player_client=android",
+                "--no-playlist",
                 "-g",
                 "-f",
-                "best[height<=?720][width<=?1280]",
+                "best[height<=?720][width<=?1280][acodec!=none][vcodec!=none]/best[acodec!=none][vcodec!=none]",
                 f"{link}",
             ]
         )
@@ -1021,6 +1032,8 @@ class YouTubeAPI:
             state = "OK" if ok else "FAILED"
             pretty_sources = {
                 "LOCAL CACHE": "local cache",
+                "DIRECT YTDLP": "direct yt-dlp",
+                "DIRECT YTDLP + WORKER + XBIT": "direct yt-dlp + Worker + xBit",
                 "WORKER PRIMARY": "worker primary",
                 "WORKER FALLBACK": "worker fallback",
                 "XBIT FALLBACK": "xBit fallback",
@@ -1074,6 +1087,108 @@ class YouTubeAPI:
                 cache_url == (media or {}).get("play_url"),
             )
             schedule_background_cache(cache_url, filepath)
+
+        def fetch_direct_media_sync(vid_id, media_type):
+            """Extract one FFmpeg-compatible public YouTube media URL.
+
+            The Android client currently provides a progressive MP4 fallback when
+            other clients expose only SABR/separate streams. A single URL is
+            required because PyTgCalls cannot consume separate audio/video URLs.
+            No cookies, PO tokens, proxies, or paid API credentials are used.
+            """
+            if media_type == "video":
+                media_format = (
+                    "best[height<=720][width<=1280][acodec!=none][vcodec!=none]"
+                    "/best[acodec!=none][vcodec!=none]"
+                )
+            else:
+                media_format = (
+                    "18/bestaudio[protocol^=http]/bestaudio/"
+                    "best[acodec!=none]/best"
+                )
+
+            ydl_opts = {
+                "quiet": True,
+                "no_warnings": False,
+                "noplaylist": True,
+                "skip_download": True,
+                "extract_flat": False,
+                "format": media_format,
+                "socket_timeout": min(30, max(5, YTDLP_EXTRACTION_TIMEOUT // 2)),
+                "retries": 2,
+                "extractor_retries": 2,
+                "extractor_args": {"youtube": {"player_client": ["android"]}},
+            }
+            try:
+                with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+                    info = ydl.extract_info(
+                        f"{self.base}{vid_id}",
+                        download=False,
+                    )
+            except Exception as exc:
+                logger.warning(
+                    "Direct yt-dlp extraction failed | media=%s | video_id=%s | reason=%s",
+                    media_type,
+                    vid_id,
+                    safe_yt_dlp_error(exc),
+                )
+                return None
+
+            media_url = info.get("url") if isinstance(info, dict) else None
+            if not media_url or not is_safe_media_url(media_url):
+                logger.warning(
+                    "Direct yt-dlp returned no safe single-file media URL | media=%s | video_id=%s",
+                    media_type,
+                    vid_id,
+                )
+                return None
+
+            blocked_headers = {
+                "authorization",
+                "cookie",
+                "content-length",
+                "host",
+                "proxy-authorization",
+                "range",
+            }
+            headers = {
+                str(key): str(value)
+                for key, value in (info.get("http_headers") or {}).items()
+                if str(key).lower() not in blocked_headers
+            }
+            logger.info(
+                "Direct yt-dlp format selected | media=%s | video_id=%s | format=%s | container=%s | protocol=%s",
+                media_type,
+                vid_id,
+                info.get("format_id") or "-",
+                info.get("ext") or "-",
+                info.get("protocol") or "-",
+            )
+            return {
+                "play_url": media_url,
+                "cache_url": media_url,
+                "headers": headers,
+            }
+
+        async def get_direct_media_links(vid_id, media_type):
+            try:
+                return await asyncio.wait_for(
+                    loop.run_in_executor(
+                        None,
+                        fetch_direct_media_sync,
+                        vid_id,
+                        media_type,
+                    ),
+                    timeout=YTDLP_EXTRACTION_TIMEOUT,
+                )
+            except Exception as exc:
+                logger.warning(
+                    "Direct yt-dlp extraction did not complete | media=%s | video_id=%s | reason=%s",
+                    media_type,
+                    vid_id,
+                    safe_yt_dlp_error(exc),
+                )
+                return None
 
         def fetch_worker_fallback_links_sync(vid_id, media_format):
             if not WORKER_FALLBACK_API_URL or not WORKER_FALLBACK_API_KEY:
@@ -1178,6 +1293,30 @@ class YouTubeAPI:
                 "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
             }
 
+            direct_audio = await get_direct_media_links(vid_id, "audio")
+            if direct_audio:
+                direct_audio_url = direct_audio["play_url"]
+                direct_headers = direct_audio.get("headers") or {}
+                if stream and await validate_stream_source(direct_audio_url):
+                    mark_source(vid_id, "audio", "DIRECT YTDLP")
+                    schedule_background_cache(
+                        direct_audio_url,
+                        filepath,
+                        direct_headers,
+                    )
+                    return direct_audio_url, False
+                result = await download_from_source(
+                    direct_audio_url,
+                    filepath,
+                    direct_headers,
+                )
+                if result:
+                    mark_source(vid_id, "audio", "DIRECT YTDLP")
+                    return result, True
+                logger.warning(
+                    "Direct yt-dlp audio was not playable; trying Worker fallback."
+                )
+
             worker_audio = await get_worker_fallback_links(vid_id, "mp3")
             if worker_audio:
                 worker_audio_url = worker_audio.get("play_url")
@@ -1237,9 +1376,9 @@ class YouTubeAPI:
                     mark_source(vid_id, "audio", "XBIT FALLBACK")
                     return result, True
 
-            mark_source(vid_id, "audio", "WORKER PRIMARY + XBIT FALLBACK", ok=False)
+            mark_source(vid_id, "audio", "DIRECT YTDLP + WORKER + XBIT", ok=False)
             logger.error(
-                "YouTube source failed | sources=worker_primary,xbit_fallback | media=audio | video_id=%s | title=%s",
+                "YouTube source failed | sources=direct_ytdlp,worker_fallback,xbit_fallback | media=audio | video_id=%s | title=%s",
                 vid_id,
                 log_title,
             )
@@ -1265,6 +1404,30 @@ class YouTubeAPI:
                 "x-api-key": f"{YT_API_KEY}",
                 "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
             }
+
+            direct_video = await get_direct_media_links(vid_id, "video")
+            if direct_video:
+                direct_video_url = direct_video["play_url"]
+                direct_headers = direct_video.get("headers") or {}
+                if stream and await validate_stream_source(direct_video_url):
+                    mark_source(vid_id, "video", "DIRECT YTDLP")
+                    schedule_background_cache(
+                        direct_video_url,
+                        filepath,
+                        direct_headers,
+                    )
+                    return direct_video_url, False
+                result = await download_from_source(
+                    direct_video_url,
+                    filepath,
+                    direct_headers,
+                )
+                if result:
+                    mark_source(vid_id, "video", "DIRECT YTDLP")
+                    return result, True
+                logger.warning(
+                    "Direct yt-dlp video was not playable; trying Worker fallback."
+                )
 
             worker_video = await get_worker_fallback_links(vid_id, "mp4")
             if worker_video:
@@ -1325,9 +1488,9 @@ class YouTubeAPI:
                     mark_source(vid_id, "video", "XBIT FALLBACK")
                     return result, True
 
-            mark_source(vid_id, "video", "WORKER PRIMARY + XBIT FALLBACK", ok=False)
+            mark_source(vid_id, "video", "DIRECT YTDLP + WORKER + XBIT", ok=False)
             logger.error(
-                "YouTube source failed | sources=worker_primary,xbit_fallback | media=video | video_id=%s | title=%s",
+                "YouTube source failed | sources=direct_ytdlp,worker_fallback,xbit_fallback | media=video | video_id=%s | title=%s",
                 vid_id,
                 log_title,
             )
