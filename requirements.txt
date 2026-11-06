@@ -4,6 +4,8 @@ apscheduler
 bing_image_downloader
 bs4
 deepai
+# JavaScript runtime used by yt-dlp for current YouTube extraction.
+deno==2.8.3
 edge-tts
 gitpython
 gradio_client==2.6.0
@@ -42,3 +44,5 @@ spotipy
 tgcrypto
 unidecode
 yt-dlp==2026.7.4
+# Local EJS component avoids runtime downloads of remote JavaScript components.
+yt-dlp-ejs==0.8.0

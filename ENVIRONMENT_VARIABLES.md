@@ -85,9 +85,9 @@ This inventory was generated from the audited `sample.env`, `config.py`, and dir
 | `YTDLP_TIMEOUT` | Optional | yt-dlp operation timeout in seconds. | Set a positive integer; sample default is 45. | `45` |
 | `YOUTUBE_META_TTL` | Optional | YouTube metadata cache lifetime in seconds. | Set a non-negative integer; sample default is 300. | `300` |
 | `YOUTUBE_META_MAX` | Optional | Maximum YouTube metadata cache entries. | Set a positive integer; sample default is 2048. | `2048` |
-| `YOUTUBE_STREAM_HTTP_PROBE_TIMEOUT` | Optional | Seconds to wait for the first byte of a Worker media stream. | Set a number; sample default is 15. | `15` |
-| `YOUTUBE_STREAM_PREFLIGHT` | Optional | Enables/disables Worker stream audio preflight validation. | Set 1/true or 0/false; sample enables it. | `1` |
-| `YOUTUBE_STREAM_PREFLIGHT_TIMEOUT` | Optional | Maximum seconds allowed for stream preflight validation. | Set a number; sample default is 15. | `15` |
+| `YOUTUBE_STREAM_HTTP_PROBE_TIMEOUT` | Optional | Seconds to wait for the first byte of a direct yt-dlp or Worker media stream. | Set a number; sample default is 15. | `15` |
+| `YOUTUBE_STREAM_PREFLIGHT` | Optional | Enables/disables FFmpeg preflight validation for direct yt-dlp and Worker streams. | Set 1/true or 0/false; sample enables it. Keep enabled for normal Railway playback. | `1` |
+| `YOUTUBE_STREAM_PREFLIGHT_TIMEOUT` | Optional | Maximum seconds allowed for direct/Worker stream preflight validation. | Set a number; sample default is 15. | `15` |
 | `DOWNLOAD_CACHE_MAX_MB` | Optional | Maximum local download-cache size in MiB. | Set based on available disk; sample default is 2048. Railway filesystem is ephemeral. | `2048` |
 | `DOWNLOAD_CACHE_MIN_FREE_MB` | Optional | Minimum free disk space preserved during caching, in MiB. | Set based on available disk; sample default is 512. | `512` |
 | `WORKER_FALLBACK_API_ATTEMPTS` | Optional | Attempts for transient Worker 429/5xx failures (code caps this at 1–3). | Set an integer; sample default is 3. | `3` |

@@ -60,7 +60,9 @@ python -m DAUSAXMUSIC
 5. Follow the Hindi guide `RAILWAY_DEPLOYMENT_HI.md` and the live `DEPLOYMENT_CHECKLIST.md`.
 6. Deploy and inspect logs. A successful image build alone does not prove that Telegram login, assistant sessions, database access or voice calls work.
 
-The source-audit changes, performed tests, and unperformed live checks are documented in `AUDIT_REPORT.md`.
+YouTube voice-chat playback now tries direct yt-dlp first, with no Worker or xBit API required. Deno and the local EJS component are pinned in `requirements.txt`; existing optional API fallbacks remain available. See `PLAYBACK_FIX_REPORT.md` for the exact root cause and real song-name/URL extraction tests.
+
+The original source-audit changes are documented in `AUDIT_REPORT.md`, and the latest playback repair and verification results are in `PLAYBACK_FIX_REPORT.md`.
 
 ## Docker / VPS
 

@@ -45,6 +45,7 @@ Repository की root directory में सीधे ये files दिख�
 
 - Python 3.12 (`python:3.12-slim`)
 - FFmpeg और FFprobe
+- Deno 2.8.3 और `yt-dlp-ejs` 0.8.0 — current yt-dlp YouTube extraction के लिए
 - Git और required native build/media libraries
 - `requirements.txt` की Python dependencies
 
@@ -126,6 +127,25 @@ Telegram log group में bot का startup message भी आना चा�
 - `No assistant started` → session string, assistant account और session validity जांचें।
 - Mongo authentication/timeout → URI, database user, password escaping और network access जांचें।
 - कोई optional AI/provider feature unavailable हो → उसकी credentials और third-party service status जांचें; core bot variables दोबारा न बदलें।
+
+### YouTube song-name और URL playback
+
+Playback source order अब **direct yt-dlp → existing optional Worker → existing optional xBit** है। Direct playback के लिए Worker या xBit API key की आवश्यकता नहीं है। ये variables blank रह सकते हैं; यदि पहले से configured हैं तो उन्हें हटाने की जरूरत नहीं है।
+
+- `requirements.txt` से `yt-dlp==2026.7.4`, `deno==2.8.3` और `yt-dlp-ejs==0.8.0` install होते हैं।
+- Dockerfile build में Deno, EJS import और FFmpeg verify किए जाते हैं।
+- Direct source public YouTube videos के लिए single-file, FFmpeg-compatible stream चुनता है; cookies, PO Token, proxy या paid API इस्तेमाल नहीं करता।
+- Existing required variables और `MONGO_DB_URI` बदलने की जरूरत नहीं है। कोई नया required playback variable नहीं जोड़ा गया है।
+- `YOUTUBE_STREAM_PREFLIGHT=1` recommended default है; यदि Railway में यह variable मौजूद नहीं है तो default पहले से enabled है।
+
+सफल direct playback के logs इस प्रकार दिख सकते हैं:
+
+```text
+Direct yt-dlp format selected | media=audio | ... | format=18 | container=mp4
+YouTube source ok | source=direct_ytdlp | media=audio | ...
+```
+
+किसी public video पर third-party extraction fail हो तो sanitized `Direct yt-dlp extraction failed` log देखें। केवल `YouTube source failed` की आखिरी line को root cause न मानें। कुछ private, age-restricted, DRM-protected या otherwise unavailable videos के लिए direct playback उपलब्ध नहीं होगा; authentication या restrictions bypass नहीं किए जाते।
 
 ## 8. Crash/restart loop से बचाव
 

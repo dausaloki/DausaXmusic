@@ -2,9 +2,64 @@
 
 Use a review branch first so the corrected tree can be compared before deployment.
 
+## Android / Termux method (recommended for a complete folder upload)
+
+GitHub's mobile app is not reliable for uploading a complete nested source tree. On Android, use Termux so folder structure and all 200+ project files are preserved. Do not upload the ZIP itself.
+
+1. Install Termux from its official source, place `DausaXmusic-Railway-Playback-Fixed.zip` in your Downloads folder, and run:
+
+```bash
+pkg update
+pkg install git gh unzip
+termux-setup-storage
+cd ~/storage/downloads
+rm -rf dausa-playback-fix
+mkdir dausa-playback-fix
+unzip DausaXmusic-Railway-Playback-Fixed.zip -d dausa-playback-fix
+```
+
+2. Authenticate without putting a token in the repository or command line:
+
+```bash
+gh auth login --hostname github.com --git-protocol https --web
+gh auth setup-git
+```
+
+Open the shown GitHub page in Chrome and approve the one-time code. Use an account authorized to write to `dausaloki/DausaXmusic`.
+
+3. Clone, copy the extracted contents, and review:
+
+```bash
+cd ~
+git clone https://github.com/dausaloki/DausaXmusic.git
+cd DausaXmusic
+git checkout main
+git pull origin main
+git checkout -b railway-playback-fix
+cp -a ~/storage/downloads/dausa-playback-fix/DausaXmusic/. ./
+git status
+git diff --check
+```
+
+The source path above is the extracted directory containing `Dockerfile`, `requirements.txt`, `config.py`, and the `DAUSAXMUSIC/` package. Do not create a second nested `DausaXmusic/DausaXmusic` root.
+
+4. Confirm no secret file is staged, then commit and push:
+
+```bash
+git add -A
+git diff --cached --name-only | grep -Ei '(^|/)(\.env(\..*)?|cookies\.txt|[^/]*\.session|[^/]*\.session-journal)$'
+# The command above must print nothing.
+git commit -m "Fix direct YouTube playback on Railway"
+git push -u origin railway-playback-fix
+```
+
+If Git asks for name/email, set your own GitHub identity with `git config user.name` and `git config user.email`; never put credentials in those values. Open the branch link in Chrome, create a pull request, review it, and merge into `main`. Railway connected to `main` should then build a new deployment.
+
+## Computer / command-line method
+
 ## 1. Extract and inspect the ZIP
 
-Extract `DausaXmusic-Railway-Fixed.zip`. Inside it is one top-level `DausaXmusic/` directory. That directory must contain `Dockerfile`, `railway.json`, `requirements.txt`, `config.py`, `sample.env`, and the `DAUSAXMUSIC/` package directly.
+Extract `DausaXmusic-Railway-Playback-Fixed.zip`. Inside it is one top-level `DausaXmusic/` directory. That directory must contain `Dockerfile`, `railway.json`, `requirements.txt`, `config.py`, `sample.env`, and the `DAUSAXMUSIC/` package directly.
 
 Do **not** upload the ZIP itself as the application source, and do not create an extra nested project root.
 
@@ -87,7 +142,7 @@ Also inspect staged configuration changes before committing. Do not rely only on
 ## 6. Commit, push, and merge
 
 ```bash
-git commit -m "Fix Railway deployment and complete project audit"
+git commit -m "Fix direct YouTube playback on Railway"
 git push -u origin railway-deployment-fix
 ```
 
