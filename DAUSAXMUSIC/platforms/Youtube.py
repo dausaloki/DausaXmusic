@@ -20,6 +20,7 @@ from DAUSAXMUSIC import LOGGER
 from DAUSAXMUSIC.utils.database import is_on_off
 from DAUSAXMUSIC.utils.formatters import time_to_seconds
 from DAUSAXMUSIC.utils.url_guard import is_safe_media_url
+from DAUSAXMUSIC.utils.youtube_cookies import get_youtube_cookie_file
 from DAUSAXMUSIC.security import build_subprocess_env
 from DAUSAXMUSIC.utils.stream.source_status import set_youtube_source_status
 from DAUSAXMUSIC.utils.esse_autoplay import (
@@ -66,19 +67,43 @@ WORKER_FALLBACK_API_RETRY_DELAY_MS = min(
 YTDLP_EXTRACTION_TIMEOUT = max(10, int_env("YTDLP_TIMEOUT", 45))
 
 
+def safe_diagnostic_text(value) -> str:
+    """Remove signed URLs from provider diagnostics before they reach logs."""
+
+    return re.sub(r"https?://\S+", "<redacted-url>", str(value))[:400]
+
+
 def safe_yt_dlp_error(exc: BaseException) -> str:
     """Keep diagnostics useful without logging signed media URLs or credentials."""
-    reason = re.sub(r"https?://\S+", "<redacted-url>", str(exc))
-    return f"{type(exc).__name__}: {reason[:400]}"
+
+    return f"{type(exc).__name__}: {safe_diagnostic_text(exc)}"
 
 
 def build_yt_dlp_args(args: list[str]) -> list[str]:
     return list(args)
 
 
+async def get_youtube_cookie_file_async():
+    """Load an optional authorized cookie export without blocking the event loop."""
+
+    return await asyncio.get_running_loop().run_in_executor(
+        None, get_youtube_cookie_file
+    )
+
+
+def add_youtube_cookie_option(options: dict) -> dict:
+    cookie_file = get_youtube_cookie_file()
+    if cookie_file:
+        options["cookiefile"] = cookie_file
+    return options
+
+
 async def check_file_size(link):
     async def get_format_info(link):
         args = build_yt_dlp_args(["yt-dlp"])
+        cookie_file = await get_youtube_cookie_file_async()
+        if cookie_file:
+            args.extend(["--cookies", cookie_file])
         args.extend(["-J", link])
         proc = await asyncio.create_subprocess_exec(
             *args,
@@ -425,6 +450,9 @@ class YouTubeAPI:
             link = link.split("&si=")[0]
 
         args = build_yt_dlp_args(["yt-dlp"])
+        cookie_file = await get_youtube_cookie_file_async()
+        if cookie_file:
+            args.extend(["--cookies", cookie_file])
         args.extend(
             [
                 "--extractor-args",
@@ -471,6 +499,9 @@ class YouTubeAPI:
                 link,
             ]
         )
+        cookie_file = await get_youtube_cookie_file_async()
+        if cookie_file:
+            args.extend(["--cookies", cookie_file])
         playlist = await shell_cmd(args)
         try:
             result = playlist.split("\n")
@@ -601,6 +632,9 @@ class YouTubeAPI:
         elif "&si=" in link:
             link = link.split("&si=")[0]
         ytdl_opts = {"quiet": True}
+        cookie_file = await get_youtube_cookie_file_async()
+        if cookie_file:
+            ytdl_opts["cookiefile"] = cookie_file
         ydl = yt_dlp.YoutubeDL(ytdl_opts)
         with ydl:
             formats_available = []
@@ -863,7 +897,7 @@ class YouTubeAPI:
                     os.replace(temp_filepath, filepath)
                     return filepath
             except Exception as e:
-                logger.error(f"yt-dlp download failed: {str(e)}")
+                logger.error("yt-dlp download failed: %s", safe_yt_dlp_error(e))
             if os.path.exists(temp_filepath):
                 os.remove(temp_filepath)
             return None
@@ -893,7 +927,7 @@ class YouTubeAPI:
                 return filepath
                 
             except Exception as e:
-                logger.error(f"Requests download failed: {str(e)}")
+                logger.error("Requests download failed: %s", safe_yt_dlp_error(e))
                 if os.path.exists(temp_filepath):
                     os.remove(temp_filepath)
                 return None
@@ -929,7 +963,11 @@ class YouTubeAPI:
                     await download_from_source(url, filepath, headers)
                     enforce_download_cache_budget()
                 except Exception as exc:
-                    logger.warning(f"Background cache failed for {os.path.basename(filepath)}: {exc}")
+                    logger.warning(
+                        "Background cache failed for %s: %s",
+                        os.path.basename(filepath),
+                        safe_yt_dlp_error(exc),
+                    )
                 finally:
                     self._background_cache_tasks.pop(filepath, None)
 
@@ -1056,6 +1094,7 @@ class YouTubeAPI:
             )
 
         def log_primary_api_issue(media_type, vid_id, message):
+            message = safe_diagnostic_text(message)
             if WORKER_FALLBACK_API_URL and WORKER_FALLBACK_API_KEY:
                 logger.info(
                     "xBit fallback API failed | media=%s | video_id=%s | title=%s | reason=%s | next=none",
@@ -1094,7 +1133,8 @@ class YouTubeAPI:
             The Android client currently provides a progressive MP4 fallback when
             other clients expose only SABR/separate streams. A single URL is
             required because PyTgCalls cannot consume separate audio/video URLs.
-            No cookies, PO tokens, proxies, or paid API credentials are used.
+            Only the operator's optional COOKIE_URL is supported; no cookies are
+            bundled and no PO tokens, proxies, or paid credentials are required.
             """
             if media_type == "video":
                 media_format = (
@@ -1119,6 +1159,7 @@ class YouTubeAPI:
                 "extractor_retries": 2,
                 "extractor_args": {"youtube": {"player_client": ["android"]}},
             }
+            add_youtube_cookie_option(ydl_opts)
             try:
                 with yt_dlp.YoutubeDL(ydl_opts) as ydl:
                     info = ydl.extract_info(
@@ -1233,7 +1274,7 @@ class YouTubeAPI:
                         media_format,
                         vid_id,
                         log_title,
-                        data.get("error", "Unknown error"),
+                        safe_diagnostic_text(data.get("error", "Unknown error")),
                     )
                     return None
 
@@ -1261,7 +1302,7 @@ class YouTubeAPI:
                     media_format,
                     vid_id,
                     log_title,
-                    str(e),
+                    safe_yt_dlp_error(e),
                 )
                 return None
             finally:
@@ -1503,12 +1544,12 @@ class YouTubeAPI:
                 "format": formats,
                 "outtmpl": fpath,
                 "geo_bypass": True,
-                "nocheckcertificate": True,
                 "quiet": True,
                 "no_warnings": True,
                 "prefer_ffmpeg": True,
                 "merge_output_format": "mp4",
             }
+            add_youtube_cookie_option(ydl_optssx)
             x = yt_dlp.YoutubeDL(ydl_optssx)
             x.download([link])
 
@@ -1518,7 +1559,6 @@ class YouTubeAPI:
                 "format": format_id,
                 "outtmpl": fpath,
                 "geo_bypass": True,
-                "nocheckcertificate": True,
                 "quiet": True,
                 "no_warnings": True,
                 "prefer_ffmpeg": True,
@@ -1530,6 +1570,7 @@ class YouTubeAPI:
                     }
                 ],
             }
+            add_youtube_cookie_option(ydl_optssx)
             x = yt_dlp.YoutubeDL(ydl_optssx)
             x.download([link])
 

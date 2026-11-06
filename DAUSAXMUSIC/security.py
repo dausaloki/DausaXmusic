@@ -67,6 +67,7 @@ SECRET_CONFIG_ATTRS = (
     "API_HASH",
     "BOT_TOKEN",
     "MONGO_DB_URI",
+    "COOKIE_URL",
     "API_KEY",
     "DEEP_API",
     "ELITE_LLM_API_KEY",
@@ -230,13 +231,14 @@ def _host_matches(host: str, allowed_hosts: Iterable[str], allow_subdomains: boo
 def validate_public_http_url(
     url: str,
     *,
+    check_for_secrets: bool = True,
     allowed_hosts: Iterable[str] | None = None,
     allow_subdomains: bool = False,
 ) -> str:
     candidate = (url or "").strip()
     if not candidate:
         raise SecurityError("URL is required.")
-    if contains_secret_value(candidate):
+    if check_for_secrets and contains_secret_value(candidate):
         raise SecurityError("URL contains a protected secret value.")
 
     parsed = urlsplit(candidate)

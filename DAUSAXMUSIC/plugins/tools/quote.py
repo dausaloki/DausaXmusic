@@ -13,7 +13,6 @@ from unidecode import unidecode
 # -----------------------------------------------------------------
 fetch = AsyncClient(
     http2=True,
-    verify=False,
     headers={
         "Accept-Language": "id-ID",
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) \

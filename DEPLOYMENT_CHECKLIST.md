@@ -22,6 +22,7 @@ This is the live deployment checklist. For the tests actually performed during t
 - [ ] Confirm the assistant account can access the target groups and voice chats.
 - [ ] Confirm MongoDB credentials and network access from Railway.
 - [ ] Configure optional provider credentials only for features actually being used.
+- [ ] Leave `COOKIE_URL` blank for anonymous playback, or set only your own authorized Netscape export at a private HTTPS URL; never commit or publicly paste cookies.
 - [ ] Leave Railway Root Directory empty or `/`; use the root Dockerfile and `python -m DAUSAXMUSIC`.
 - [ ] Keep failure retries bounded; do not replace the configured policy with an unbounded crash loop.
 
@@ -45,6 +46,7 @@ This is the live deployment checklist. For the tests actually performed during t
 - [ ] `/play <public YouTube watch URL>` also produces audible audio for the same test track.
 - [ ] Logs show `Direct yt-dlp format selected` and `YouTube source ok | source=direct_ytdlp` without requiring Worker/xBit credentials.
 - [ ] If a source fails, inspect the first sanitized direct-extraction/preflight error rather than only the final generic message.
+- [ ] If Railway returns HTTP 429/`Sign in to confirm you're not a bot`, record it as an external IP/session challenge—not MongoDB/FFmpeg—and test only an authorized cookie/provider path without assuming a code-only bypass.
 - [ ] Pause, resume, skip, stop, seek, loop, shuffle, speed, and autoplay work as expected.
 - [ ] `/vplay` and video playback work.
 - [ ] Queue list/back buttons and the corrected queue welcome image work.

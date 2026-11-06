@@ -147,9 +147,9 @@ def blend_rgb(color_a, color_b, ratio: float):
 
 
 def resolve_brand_name() -> str:
-    raw_name = getattr(app, "name", None) or BOT_NAME or "EliteMusic"
+    raw_name = getattr(app, "name", None) or BOT_NAME or "DausaXmusic"
     clean_name = trim_text(" ".join(unidecode(str(raw_name)).split()), 24)
-    return clean_name or "EliteMusic"
+    return clean_name or "DausaXmusic"
 
 
 @lru_cache(maxsize=16)

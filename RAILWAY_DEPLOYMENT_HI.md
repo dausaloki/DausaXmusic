@@ -45,7 +45,7 @@ Repository की root directory में सीधे ये files दिख�
 
 - Python 3.12 (`python:3.12-slim`)
 - FFmpeg और FFprobe
-- Deno 2.8.3 और `yt-dlp-ejs` 0.8.0 — current yt-dlp YouTube extraction के लिए
+- Deno 2.9.8 और `yt-dlp-ejs` 0.8.0 — current yt-dlp YouTube extraction के लिए
 - Git और required native build/media libraries
 - `requirements.txt` की Python dependencies
 
@@ -92,7 +92,7 @@ SUPPORT_CHANNEL=https://t.me/kalam_se
 
 `BOT_USERNAME` में `@` न लगाएं। Bot name और owner branding को बदलने की जरूरत नहीं है।
 
-Optional provider, voice-play, cache, duration और tuning variables की **पूरी 86-variable table** `ENVIRONMENT_VARIABLES.md` में है। केवल इस्तेमाल की जा रही optional services के credentials जोड़ें; सभी optional keys भरना आवश्यक नहीं है।
+Optional provider, voice-play, cache, duration और tuning variables की **पूरी 86-variable table** `ENVIRONMENT_VARIABLES.md` में है। किन्हें unchanged रखना है और केवल `COOKIE_URL` का optional behavior क्या बदला है, उसकी exact सूची `RAILWAY_VARIABLES_FINAL.md` में है। केवल इस्तेमाल की जा रही optional services के credentials जोड़ें; सभी optional keys भरना आवश्यक नहीं है।
 
 ## 6. Telegram और MongoDB checks
 
@@ -132,9 +132,9 @@ Telegram log group में bot का startup message भी आना चा�
 
 Playback source order अब **direct yt-dlp → existing optional Worker → existing optional xBit** है। Direct playback के लिए Worker या xBit API key की आवश्यकता नहीं है। ये variables blank रह सकते हैं; यदि पहले से configured हैं तो उन्हें हटाने की जरूरत नहीं है।
 
-- `requirements.txt` से `yt-dlp==2026.7.4`, `deno==2.8.3` और `yt-dlp-ejs==0.8.0` install होते हैं।
+- `requirements.txt` से `yt-dlp==2026.10.26`, `deno==2.9.8` और `yt-dlp-ejs==0.8.0` install होते हैं।
 - Dockerfile build में Deno, EJS import और FFmpeg verify किए जाते हैं।
-- Direct source public YouTube videos के लिए single-file, FFmpeg-compatible stream चुनता है; cookies, PO Token, proxy या paid API इस्तेमाल नहीं करता।
+- Direct source public YouTube videos के लिए single-file, FFmpeg-compatible stream चुनता है। कोई cookie, PO Token, proxy या paid API bundled/required नहीं है।
 - Existing required variables और `MONGO_DB_URI` बदलने की जरूरत नहीं है। कोई नया required playback variable नहीं जोड़ा गया है।
 - `YOUTUBE_STREAM_PREFLIGHT=1` recommended default है; यदि Railway में यह variable मौजूद नहीं है तो default पहले से enabled है।
 
@@ -146,6 +146,17 @@ YouTube source ok | source=direct_ytdlp | media=audio | ...
 ```
 
 किसी public video पर third-party extraction fail हो तो sanitized `Direct yt-dlp extraction failed` log देखें। केवल `YouTube source failed` की आखिरी line को root cause न मानें। कुछ private, age-restricted, DRM-protected या otherwise unavailable videos के लिए direct playback उपलब्ध नहीं होगा; authentication या restrictions bypass नहीं किए जाते।
+
+**Railway IP limitation:** आपके supplied Railway screenshot में bot startup सफल था, लेकिन YouTube ने HTTP 429 और `Sign in to confirm you're not a bot` दिया। यह MongoDB, Telegram startup या FFmpeg failure नहीं है। Sandbox में direct test pass होना Railway पर guaranteed playback साबित नहीं करता, क्योंकि datacenter IP और session reputation अलग होते हैं। किसी client change या code-only setting को guaranteed anti-bot fix न मानें।
+
+यदि आपके पास अपने authorized YouTube account का session है तो existing optional `COOKIE_URL` अब supported है:
+
+1. अपने account का yt-dlp-compatible **Netscape `cookies.txt`** export सुरक्षित रूप से तैयार करें।
+2. उसे किसी private, expiring HTTPS location पर रखें जिसे आप control करते हैं; public paste/GitHub में नहीं।
+3. Railway में `COOKIE_URL=https://...` सेट करके redeploy करें। Loader public HTTPS host, 1 MiB limit और Netscape format validate करता है; file को private temporary permissions में रखता है और URL/content log नहीं करता।
+4. `COOKIE_URL` blank रखने पर पुराना anonymous direct path अपरिवर्तित है। Cookies expire हो सकती हैं और यह भी playback guarantee नहीं है।
+
+किसी और के cookies, copied Worker key, PO Token, proxy या anti-bot/DRM bypass का उपयोग न करें। Authorized session/provider उपलब्ध न हो और challenge बना रहे तो Railway IP पर legitimate code-only guarantee संभव नहीं है।
 
 ## 8. Crash/restart loop से बचाव
 
@@ -198,4 +209,4 @@ grep -RIn --include='*.py' 'youtubesearchpython\.future' DAUSAXMUSIC
 - ZIP में जानबूझकर कोई cookie/session/secret file शामिल नहीं है।
 - पुराने exposed credentials हों तो deploy से पहले rotate करें।
 - Railway के cache/log files ephemeral हैं; persistent data के लिए MongoDB पर भरोसा करें, container filesystem पर नहीं।
-- Third-party cookies केवल तभी और केवल सुरक्षित निजी तरीके से उपयोग करें जब आपको अधिकार हो; इस project के current code में `COOKIE_URL` का active consumer नहीं मिला।
+- `COOKIE_URL` optional active consumer है, लेकिन केवल अपने authorized Netscape export के लिए उपयोग करें। किसी third-party का session कभी न लें; ZIP/repository में cookie file नहीं है।

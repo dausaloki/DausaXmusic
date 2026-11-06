@@ -1,5 +1,16 @@
 # Security Audit
 
+Date: 2026-11-06
+Scope: final three-source rebuild and authorized playback hardening.
+
+- Upstream's hardcoded Worker credential and `assets/cookies.txt` were excluded; no authenticated probe or credential migration was performed.
+- `COOKIE_URL` is loaded through `config.py` before environment scrubbing, redacted as sensitive configuration, and consumed only as an optional operator-authorized Netscape cookie export.
+- Cookie downloads require public HTTPS targets, revalidate up to three redirects, disable ambient proxy use, cap content at 1 MiB, validate Netscape rows, and use a private temporary directory (`0700`) and file (`0600`). Cookie URLs/content are not logged.
+- Blank `COOKIE_URL` preserves anonymous playback. Invalid/unavailable cookie downloads disable only that optional cookie path and retry at most once per five minutes rather than on every track.
+- Removed `verify=False` from the quote HTTP client and `nocheckcertificate=True` from YouTube/song yt-dlp options; normal TLS certificate verification is restored.
+- Sanitized direct-download, background-cache, Worker and xBit diagnostic paths to avoid signed media URLs in logs.
+- Regression coverage includes anonymous and configured extraction, HTTPS/redirect validation, malformed/oversized responses, private permissions, cached failures, secret-check defaults and URL log redaction.
+
 Date: 2026-03-09
 Scope: secret exposure hardening for subprocesses, logs, and user-controlled URL commands.
 

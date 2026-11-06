@@ -29,6 +29,7 @@ from DAUSAXMUSIC.utils.errors import capture_err, capture_callback_err
 from DAUSAXMUSIC.utils.formatters import convert_bytes, time_to_seconds
 from DAUSAXMUSIC.utils.inline.song import song_markup
 from DAUSAXMUSIC.utils.rich_buttons import rich_call, rich_media
+from DAUSAXMUSIC.utils.youtube_cookies import get_youtube_cookie_file
 
 SONG_COMMAND = ["song"]
 APPLE_SPOTIFY_COMMANDS = ["apple", "spotify"]
@@ -232,7 +233,6 @@ async def _download_audio_with_ytdlp(vidid: str, title: str) -> tuple[str | None
             "no_warnings": True,
             "noplaylist": True,
             "geo_bypass": True,
-            "nocheckcertificate": True,
             "retries": 2,
             "socket_timeout": 25,
             "prefer_ffmpeg": True,
@@ -244,6 +244,9 @@ async def _download_audio_with_ytdlp(vidid: str, title: str) -> tuple[str | None
                 }
             ],
         }
+        cookie_file = get_youtube_cookie_file()
+        if cookie_file:
+            options["cookiefile"] = cookie_file
         with yt_dlp.YoutubeDL(options) as ydl:
             ydl.download([url])
 

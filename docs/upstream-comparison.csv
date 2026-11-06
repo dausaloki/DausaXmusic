@@ -1,0 +1,284 @@
+path,raw_status,baseline_normalized_status,review_decision,reason
+.dockerignore,different,substantive_difference,retained_hardened_custom,"Custom secret, session, cookie and artifact exclusions retained."
+.gitattributes,different,exact,hardened_archive_metadata,Added export-subst for FINAL_BUILD_INFO.md so the delivered ZIP carries its exact archived commit; no runtime behavior changed.
+.github/dependabot.yml,identical,exact,retained_identical,Byte-identical upstream/customized path retained.
+.github/workflows/ci.yml,custom_only,not_applicable,preserved_custom_only,"Customized-only source, documentation, test or asset retained; not an upstream omission."
+.gitignore,different,substantive_difference,retained_hardened_custom,Custom secret and generated-artifact exclusions retained.
+AUDIT_REPORT.md,custom_only,not_applicable,preserved_custom_only,"Customized-only source, documentation, test or asset retained; not an upstream omission."
+COMPLETE_REBUILD_REPORT.md,custom_only,not_applicable,added_final_report,"Added the complete rebuild, verification, limitation, inventory, and delivery report."
+DEPLOYMENT_CHECKLIST.md,custom_only,not_applicable,preserved_custom_only,"Customized-only source, documentation, test or asset retained; not an upstream omission."
+Dockerfile,different,substantive_difference,retained_custom_runtime,"Python 3.12, FFmpeg, native libraries and Deno/EJS build checks retained."
+ENVIRONMENT_VARIABLES.md,custom_only,not_applicable,preserved_custom_only,"Customized-only source, documentation, test or asset retained; not an upstream omission."
+FEATURE_MATRIX.md,custom_only,not_applicable,preserved_custom_only,"Customized-only source, documentation, test or asset retained; not an upstream omission."
+FINAL_BUILD_INFO.md,custom_only,not_applicable,added_build_provenance,Added Git archive substitution fields for exact final branch/commit provenance without modifying main.
+GITHUB_UPLOAD.md,custom_only,not_applicable,preserved_custom_only,"Customized-only source, documentation, test or asset retained; not an upstream omission."
+LICENSE,identical,exact,retained_identical,Byte-identical upstream/customized path retained.
+MMF_MEDIA_PROCESSING.md,identical,exact,retained_identical,Byte-identical upstream/customized path retained.
+PLAYBACK_FIX_REPORT.md,custom_only,not_applicable,preserved_custom_only,"Customized-only source, documentation, test or asset retained; not an upstream omission."
+PROJECT_STATUS.md,custom_only,not_applicable,preserved_custom_only,"Customized-only source, documentation, test or asset retained; not an upstream omission."
+PR_DESCRIPTION.md,custom_only,not_applicable,added_pr_documentation,"Added review-ready PR scope, verification evidence, risks, and protected-main instructions."
+Procfile,identical,exact,retained_identical,Byte-identical upstream/customized path retained.
+RAILWAY_DEPLOYMENT_HI.md,custom_only,not_applicable,preserved_custom_only,"Customized-only source, documentation, test or asset retained; not an upstream omission."
+RAILWAY_VARIABLES_FINAL.md,custom_only,not_applicable,added_railway_variable_guide,"Added the complete Railway variable reference, ownership boundaries, and Android instructions."
+README.md,custom_only,not_applicable,preserved_custom_only,"Customized-only source, documentation, test or asset retained; not an upstream omission."
+RICH_BUTTON_MIGRATION.md,different,equivalent,retained_equivalent_customization,Package/project/owner/support normalization shows equivalent implementation; customization retained.
+RICH_UI_SMOKE_TEST.md,identical,exact,retained_identical,Byte-identical upstream/customized path retained.
+Readme.md,upstream_only,not_applicable,excluded_upstream_branded_readme,Upstream-only branded Readme excluded; customized README and DausaXmusic documentation are retained.
+SECURITY.md,different,substantive_difference,retained_custom_policy,DausaXmusic private reporting and deployment security policy retained.
+SECURITY_AUDIT.md,different,equivalent,retained_equivalent_customization,Package/project/owner/support normalization shows equivalent implementation; customization retained.
+__init__.py,different,equivalent,retained_equivalent_customization,Package/project/owner/support normalization shows equivalent implementation; customization retained.
+__main__.py,different,substantive_difference,retained_custom_startup,"Custom command catalogue, required-variable validation and fatal startup handling retained."
+app.json,different,substantive_difference,retained_custom_config_corrected,"Dausa metadata retained; rebuild corrects owner, local-session guidance, branding and optional provider fields."
+assets/__init__.py,identical,exact,retained_identical,Byte-identical upstream/customized path retained.
+assets/branding/welcome-banner.png,custom_only,not_applicable,preserved_custom_only,"Customized-only source, documentation, test or asset retained; not an upstream omission."
+assets/cookies.txt,upstream_only,not_applicable,excluded_upstream_cookie_placeholder,Upstream-only cookie placeholder excluded; no cookie or private credential is migrated. Use only separately authorized COOKIE_URL if needed.
+assets/default.ttf,identical,not_applicable,retained_identical,Byte-identical upstream/customized path retained.
+assets/thumb/font.ttf,identical,not_applicable,retained_identical,Byte-identical upstream/customized path retained.
+assets/thumb/font2.ttf,identical,not_applicable,retained_identical,Byte-identical upstream/customized path retained.
+assets/thumb/play_icons.png,identical,not_applicable,retained_identical,Byte-identical upstream/customized path retained.
+assets/thumb/player/DESIGN.md,different,substantive_difference,preserved_custom_design,Custom black/cyan player design documentation retained.
+assets/thumb/player/cinematic-template.png,identical,not_applicable,retained_identical,Byte-identical upstream/customized path retained.
+assets/thumb/player/dausaxmusic-cyan-reference.png,custom_only,not_applicable,preserved_custom_only,"Customized-only source, documentation, test or asset retained; not an upstream omission."
+assets/thumb/player/design-reference.png,different,not_applicable,replaced_branded_reference,Replaced the unused upstream-branded reference image with approved DausaXmusic artwork; path preserved. Runtime uses neutral cinematic-template.png.
+assets/thumb/player/font.ttf,identical,not_applicable,retained_identical,Byte-identical upstream/customized path retained.
+assets/thumb/player/font2.ttf,identical,not_applicable,retained_identical,Byte-identical upstream/customized path retained.
+assets/tiny.png,identical,not_applicable,retained_identical,Byte-identical upstream/customized path retained.
+assets/upic.png,identical,not_applicable,retained_identical,Byte-identical upstream/customized path retained.
+assets/vivaan/Arimo.ttf,identical,not_applicable,retained_identical,Byte-identical upstream/customized path retained.
+assets/vivaan/couple.png,identical,not_applicable,retained_identical,Byte-identical upstream/customized path retained.
+assets/vivaan/cute.mp4,identical,not_applicable,retained_identical,Byte-identical upstream/customized path retained.
+assets/vivaan/welcome.png,identical,not_applicable,retained_identical,Byte-identical upstream/customized path retained.
+button_styles.py,identical,exact,retained_identical,Byte-identical upstream/customized path retained.
+config.py,different,substantive_difference,retained_custom_config_hardened,Required branding and validation retained; rebuild activates existing COOKIE_URL safely.
+core/bot.py,different,substantive_difference,retained_custom_startup,Custom nonzero fatal errors and LOGGER_ID checks retained.
+core/call.py,different,substantive_difference,retained_custom_identity,Dausa assistant/session attribute names and existing PyTgCalls behavior retained.
+core/dir.py,identical,exact,retained_identical,Byte-identical upstream/customized path retained.
+core/git.py,identical,exact,retained_identical,Byte-identical upstream/customized path retained.
+core/mongo.py,different,substantive_difference,retained_custom_mongo,Deferred Mongo connection and credential-safe initialization retained; URI behavior unchanged.
+core/runtime_patches.py,identical,exact,retained_identical,Byte-identical upstream/customized path retained.
+core/sections.py,identical,exact,retained_identical,Byte-identical upstream/customized path retained.
+core/userbot.py,different,substantive_difference,retained_custom_startup,"Dausa assistant names, optional join list and explicit fatal errors retained; no forced upstream chats."
+default.ttf,custom_only,not_applicable,preserved_custom_only,"Customized-only source, documentation, test or asset retained; not an upstream omission."
+docker-compose.yml,custom_only,not_applicable,preserved_custom_only,"Customized-only source, documentation, test or asset retained; not an upstream omission."
+docs/public-api-validation.md,different,substantive_difference,retained_custom_docs,Custom provider validation documentation retained.
+docs/upstream-comparison.csv,custom_only,not_applicable,added_upstream_comparison,Added the path-by-path final/upstream comparison with review decisions.
+heroku.yml,identical,exact,retained_identical,Byte-identical upstream/customized path retained.
+logging.py,different,substantive_difference,retained_custom_security,Custom formatting and secret-redaction behavior retained.
+misc.py,different,equivalent,retained_equivalent_customization,Package/project/owner/support normalization shows equivalent implementation; customization retained.
+mongo/couples_db.py,different,equivalent,retained_equivalent_customization,Package/project/owner/support normalization shows equivalent implementation; customization retained.
+mongo/pretenderdb.py,different,equivalent,retained_equivalent_customization,Package/project/owner/support normalization shows equivalent implementation; customization retained.
+mongo/welcomedb.py,different,equivalent,retained_equivalent_customization,Package/project/owner/support normalization shows equivalent implementation; customization retained.
+platforms/Apple.py,different,substantive_difference,retained_custom_provider,Custom provider metadata/search compatibility retained.
+platforms/Carbon.py,different,equivalent,retained_equivalent_customization,Package/project/owner/support normalization shows equivalent implementation; customization retained.
+platforms/Resso.py,different,substantive_difference,retained_custom_provider,Custom provider metadata/search compatibility retained.
+platforms/Soundcloud.py,different,substantive_difference,retained_custom_provider,Custom provider metadata/search compatibility retained.
+platforms/Spotify.py,different,substantive_difference,retained_custom_provider,Custom provider metadata/search compatibility retained.
+platforms/Telegram.py,different,equivalent,retained_equivalent_customization,Package/project/owner/support normalization shows equivalent implementation; customization retained.
+platforms/Youtube.py,different,substantive_difference,retained_custom_playback_hardened,Direct yt-dlp and optional authorized fallbacks retained; upstream hardcoded Worker key rejected; rebuild adds secure cookie support.
+platforms/__init__.py,identical,exact,retained_identical,Byte-identical upstream/customized path retained.
+plugins/Kishu/bgremove.py,different,equivalent,retained_equivalent_customization,Package/project/owner/support normalization shows equivalent implementation; customization retained.
+plugins/Kishu/dicegame.py,different,equivalent,retained_equivalent_customization,Package/project/owner/support normalization shows equivalent implementation; customization retained.
+plugins/Kishu/domain.py,different,equivalent,retained_equivalent_customization,Package/project/owner/support normalization shows equivalent implementation; customization retained.
+plugins/Kishu/figlet.py,different,substantive_difference,retained_custom_identity_ui,"Custom Dausa naming, callbacks, UI or media behavior retained; equivalent upstream implementation not overwritten."
+plugins/Kishu/fonts.py,different,equivalent,retained_equivalent_customization,Package/project/owner/support normalization shows equivalent implementation; customization retained.
+plugins/Kishu/groupdata.py,different,equivalent,retained_equivalent_customization,Package/project/owner/support normalization shows equivalent implementation; customization retained.
+plugins/Kishu/hexacode.py,different,equivalent,retained_equivalent_customization,Package/project/owner/support normalization shows equivalent implementation; customization retained.
+plugins/Kishu/ip.py,different,substantive_difference,retained_custom_security,Custom credential loading/redaction and provider behavior retained.
+plugins/Kishu/love.py,different,equivalent,retained_equivalent_customization,Package/project/owner/support normalization shows equivalent implementation; customization retained.
+plugins/Kishu/meme.py,different,equivalent,retained_equivalent_customization,Package/project/owner/support normalization shows equivalent implementation; customization retained.
+plugins/Kishu/password.py,different,equivalent,retained_equivalent_customization,Package/project/owner/support normalization shows equivalent implementation; customization retained.
+plugins/Kishu/population.py,different,substantive_difference,retained_custom_identity_ui,"Custom Dausa naming, callbacks, UI or media behavior retained; equivalent upstream implementation not overwritten."
+plugins/Kishu/pypi.py,different,equivalent,retained_equivalent_customization,Package/project/owner/support normalization shows equivalent implementation; customization retained.
+plugins/Kishu/qr.py,different,equivalent,retained_equivalent_customization,Package/project/owner/support normalization shows equivalent implementation; customization retained.
+plugins/Kishu/sg.py,different,equivalent,retained_equivalent_customization,Package/project/owner/support normalization shows equivalent implementation; customization retained.
+plugins/Kishu/weather.py,different,equivalent,retained_equivalent_customization,Package/project/owner/support normalization shows equivalent implementation; customization retained.
+plugins/Kishu/webdl.py,different,equivalent,retained_equivalent_customization,Package/project/owner/support normalization shows equivalent implementation; customization retained.
+plugins/Kishu/wishcute.py,different,substantive_difference,retained_custom_assets,Custom working media path and branding retained.
+plugins/Kishu/write.py,different,substantive_difference,retained_custom_identity_ui,"Custom Dausa naming, callbacks, UI or media behavior retained; equivalent upstream implementation not overwritten."
+plugins/Manager/actions.py,different,equivalent,retained_equivalent_customization,Package/project/owner/support normalization shows equivalent implementation; customization retained.
+plugins/Manager/assisuser.py,different,equivalent,retained_equivalent_customization,Package/project/owner/support normalization shows equivalent implementation; customization retained.
+plugins/Manager/del_msg.py,different,equivalent,retained_equivalent_customization,Package/project/owner/support normalization shows equivalent implementation; customization retained.
+plugins/Manager/funtag.py,different,equivalent,retained_equivalent_customization,Package/project/owner/support normalization shows equivalent implementation; customization retained.
+plugins/Manager/grouphandler.py,different,equivalent,retained_equivalent_customization,Package/project/owner/support normalization shows equivalent implementation; customization retained.
+plugins/Manager/id.py,different,equivalent,retained_equivalent_customization,Package/project/owner/support normalization shows equivalent implementation; customization retained.
+plugins/Manager/info.py,different,equivalent,retained_equivalent_customization,Package/project/owner/support normalization shows equivalent implementation; customization retained.
+plugins/Manager/language.py,different,equivalent,retained_equivalent_customization,Package/project/owner/support normalization shows equivalent implementation; customization retained.
+plugins/Manager/promote.py,different,equivalent,retained_equivalent_customization,Package/project/owner/support normalization shows equivalent implementation; customization retained.
+plugins/Manager/purge.py,different,equivalent,retained_equivalent_customization,Package/project/owner/support normalization shows equivalent implementation; customization retained.
+plugins/Manager/utag.py,different,equivalent,retained_equivalent_customization,Package/project/owner/support normalization shows equivalent implementation; customization retained.
+plugins/Manager/welcome.py,different,substantive_difference,retained_custom_identity_ui,"Custom Dausa naming, callbacks, UI or media behavior retained; equivalent upstream implementation not overwritten."
+plugins/Manager/zombie.py,different,equivalent,retained_equivalent_customization,Package/project/owner/support normalization shows equivalent implementation; customization retained.
+plugins/__init__.py,identical,exact,retained_identical,Byte-identical upstream/customized path retained.
+plugins/admins/auth.py,different,equivalent,retained_equivalent_customization,Package/project/owner/support normalization shows equivalent implementation; customization retained.
+plugins/admins/autodelete.py,different,equivalent,retained_equivalent_customization,Package/project/owner/support normalization shows equivalent implementation; customization retained.
+plugins/admins/autoplay.py,different,equivalent,retained_equivalent_customization,Package/project/owner/support normalization shows equivalent implementation; customization retained.
+plugins/admins/callback.py,different,equivalent,retained_equivalent_customization,Package/project/owner/support normalization shows equivalent implementation; customization retained.
+plugins/admins/loop.py,different,equivalent,retained_equivalent_customization,Package/project/owner/support normalization shows equivalent implementation; customization retained.
+plugins/admins/pause.py,different,equivalent,retained_equivalent_customization,Package/project/owner/support normalization shows equivalent implementation; customization retained.
+plugins/admins/resume.py,different,equivalent,retained_equivalent_customization,Package/project/owner/support normalization shows equivalent implementation; customization retained.
+plugins/admins/seek.py,different,equivalent,retained_equivalent_customization,Package/project/owner/support normalization shows equivalent implementation; customization retained.
+plugins/admins/shuffle.py,different,equivalent,retained_equivalent_customization,Package/project/owner/support normalization shows equivalent implementation; customization retained.
+plugins/admins/skip.py,different,equivalent,retained_equivalent_customization,Package/project/owner/support normalization shows equivalent implementation; customization retained.
+plugins/admins/speed.py,different,equivalent,retained_equivalent_customization,Package/project/owner/support normalization shows equivalent implementation; customization retained.
+plugins/admins/stop.py,different,equivalent,retained_equivalent_customization,Package/project/owner/support normalization shows equivalent implementation; customization retained.
+plugins/admins/totalmembers.py,different,equivalent,retained_equivalent_customization,Package/project/owner/support normalization shows equivalent implementation; customization retained.
+plugins/admins/vcinfo.py,different,equivalent,retained_equivalent_customization,Package/project/owner/support normalization shows equivalent implementation; customization retained.
+plugins/admins/vcnotify.py,different,equivalent,retained_equivalent_customization,Package/project/owner/support normalization shows equivalent implementation; customization retained.
+plugins/admins/voiceplay.py,different,equivalent,retained_equivalent_customization,Package/project/owner/support normalization shows equivalent implementation; customization retained.
+plugins/bot/help.py,different,equivalent,retained_equivalent_customization,Package/project/owner/support normalization shows equivalent implementation; customization retained.
+plugins/bot/inline.py,different,substantive_difference,retained_custom_identity_ui,"Custom Dausa naming, callbacks, UI or media behavior retained; equivalent upstream implementation not overwritten."
+plugins/bot/settings.py,different,equivalent,retained_equivalent_customization,Package/project/owner/support normalization shows equivalent implementation; customization retained.
+plugins/bot/start.py,different,substantive_difference,retained_custom_identity_ui,"Custom Dausa naming, callbacks, UI or media behavior retained; equivalent upstream implementation not overwritten."
+plugins/misc/anime.py,different,equivalent,retained_equivalent_customization,Package/project/owner/support normalization shows equivalent implementation; customization retained.
+plugins/misc/autoleave.py,different,equivalent,retained_equivalent_customization,Package/project/owner/support normalization shows equivalent implementation; customization retained.
+plugins/misc/bored.py,different,equivalent,retained_equivalent_customization,Package/project/owner/support normalization shows equivalent implementation; customization retained.
+plugins/misc/broadcast.py,different,substantive_difference,retained_custom_identity_ui,"Custom Dausa naming, callbacks, UI or media behavior retained; equivalent upstream implementation not overwritten."
+plugins/misc/downloadrepo.py,different,substantive_difference,retained_custom_security,Custom GitHub-only/SUDO URL hardening retained.
+plugins/misc/funtag_messages.py,identical,exact,retained_identical,Byte-identical upstream/customized path retained.
+plugins/misc/instadl.py,different,equivalent,retained_equivalent_customization,Package/project/owner/support normalization shows equivalent implementation; customization retained.
+plugins/misc/mongochk.py,different,equivalent,retained_equivalent_customization,Package/project/owner/support normalization shows equivalent implementation; customization retained.
+plugins/misc/movie.py,different,equivalent,retained_equivalent_customization,Package/project/owner/support normalization shows equivalent implementation; customization retained.
+plugins/misc/news.py,different,equivalent,retained_equivalent_customization,Package/project/owner/support normalization shows equivalent implementation; customization retained.
+plugins/misc/seeker.py,different,equivalent,retained_equivalent_customization,Package/project/owner/support normalization shows equivalent implementation; customization retained.
+plugins/misc/truth_dare.py,different,equivalent,retained_equivalent_customization,Package/project/owner/support normalization shows equivalent implementation; customization retained.
+plugins/misc/tts.py,different,equivalent,retained_equivalent_customization,Package/project/owner/support normalization shows equivalent implementation; customization retained.
+plugins/misc/urlshortner.py,different,equivalent,retained_equivalent_customization,Package/project/owner/support normalization shows equivalent implementation; customization retained.
+plugins/misc/waifufxn.py,different,substantive_difference,retained_custom_identity_ui,"Custom Dausa naming, callbacks, UI or media behavior retained; equivalent upstream implementation not overwritten."
+plugins/misc/watcher.py,different,equivalent,retained_equivalent_customization,Package/project/owner/support normalization shows equivalent implementation; customization retained.
+plugins/personal/__init__.py,custom_only,not_applicable,preserved_custom_only,"Customized-only source, documentation, test or asset retained; not an upstream omission."
+plugins/personal/library.py,custom_only,not_applicable,preserved_custom_only,"Customized-only source, documentation, test or asset retained; not an upstream omission."
+plugins/personal/owner_tools.py,custom_only,not_applicable,preserved_custom_only,"Customized-only source, documentation, test or asset retained; not an upstream omission."
+plugins/play/channel.py,different,equivalent,retained_equivalent_customization,Package/project/owner/support normalization shows equivalent implementation; customization retained.
+plugins/play/live.py,different,equivalent,retained_equivalent_customization,Package/project/owner/support normalization shows equivalent implementation; customization retained.
+plugins/play/play.py,different,substantive_difference,retained_custom_identity_ui,"Custom Dausa naming, callbacks, UI or media behavior retained; equivalent upstream implementation not overwritten."
+plugins/play/playmode.py,different,equivalent,retained_equivalent_customization,Package/project/owner/support normalization shows equivalent implementation; customization retained.
+plugins/sudo/autoend.py,different,equivalent,retained_equivalent_customization,Package/project/owner/support normalization shows equivalent implementation; customization retained.
+plugins/sudo/blchat.py,different,equivalent,retained_equivalent_customization,Package/project/owner/support normalization shows equivalent implementation; customization retained.
+plugins/sudo/block.py,different,equivalent,retained_equivalent_customization,Package/project/owner/support normalization shows equivalent implementation; customization retained.
+plugins/sudo/botschk.py,different,substantive_difference,retained_custom_identity_ui,"Custom Dausa naming, callbacks, UI or media behavior retained; equivalent upstream implementation not overwritten."
+plugins/sudo/gban.py,different,equivalent,retained_equivalent_customization,Package/project/owner/support normalization shows equivalent implementation; customization retained.
+plugins/sudo/logger.py,different,equivalent,retained_equivalent_customization,Package/project/owner/support normalization shows equivalent implementation; customization retained.
+plugins/sudo/maintenance.py,different,equivalent,retained_equivalent_customization,Package/project/owner/support normalization shows equivalent implementation; customization retained.
+plugins/sudo/post.py,different,equivalent,retained_equivalent_customization,Package/project/owner/support normalization shows equivalent implementation; customization retained.
+plugins/sudo/restart.py,different,substantive_difference,retained_custom_identity_ui,"Custom Dausa naming, callbacks, UI or media behavior retained; equivalent upstream implementation not overwritten."
+plugins/sudo/sudoers.py,different,equivalent,retained_equivalent_customization,Package/project/owner/support normalization shows equivalent implementation; customization retained.
+plugins/tools/active.py,different,equivalent,retained_equivalent_customization,Package/project/owner/support normalization shows equivalent implementation; customization retained.
+plugins/tools/ai.py,different,equivalent,retained_equivalent_customization,Package/project/owner/support normalization shows equivalent implementation; customization retained.
+plugins/tools/bugs.py,different,equivalent,retained_equivalent_customization,Package/project/owner/support normalization shows equivalent implementation; customization retained.
+plugins/tools/chatlog.py,different,equivalent,retained_equivalent_customization,Package/project/owner/support normalization shows equivalent implementation; customization retained.
+plugins/tools/couples.py,different,equivalent,retained_equivalent_customization,Package/project/owner/support normalization shows equivalent implementation; customization retained.
+plugins/tools/editimg.py,different,equivalent,retained_equivalent_customization,Package/project/owner/support normalization shows equivalent implementation; customization retained.
+plugins/tools/genvid.py,different,equivalent,retained_equivalent_customization,Package/project/owner/support normalization shows equivalent implementation; customization retained.
+plugins/tools/gpt.py,different,substantive_difference,retained_custom_identity_ui,"Custom Dausa naming, callbacks, UI or media behavior retained; equivalent upstream implementation not overwritten."
+plugins/tools/group.py,different,equivalent,retained_equivalent_customization,Package/project/owner/support normalization shows equivalent implementation; customization retained.
+plugins/tools/imposter.py,different,equivalent,retained_equivalent_customization,Package/project/owner/support normalization shows equivalent implementation; customization retained.
+plugins/tools/invitelink.py,different,equivalent,retained_equivalent_customization,Package/project/owner/support normalization shows equivalent implementation; customization retained.
+plugins/tools/kang.py,different,equivalent,retained_equivalent_customization,Package/project/owner/support normalization shows equivalent implementation; customization retained.
+plugins/tools/lyrics.py,different,equivalent,retained_equivalent_customization,Package/project/owner/support normalization shows equivalent implementation; customization retained.
+plugins/tools/masti.py,different,equivalent,retained_equivalent_customization,Package/project/owner/support normalization shows equivalent implementation; customization retained.
+plugins/tools/mmf.py,different,substantive_difference,retained_custom_identity_ui,"Custom Dausa naming, callbacks, UI or media behavior retained; equivalent upstream implementation not overwritten."
+plugins/tools/phone.py,different,substantive_difference,retained_custom_security,Custom provider credential handling retained.
+plugins/tools/ping.py,different,equivalent,retained_equivalent_customization,Package/project/owner/support normalization shows equivalent implementation; customization retained.
+plugins/tools/queue.py,different,substantive_difference,retained_custom_assets_ui,Custom queue branding and working asset path retained.
+plugins/tools/quote.py,different,equivalent,retained_equivalent_customization,Package/project/owner/support normalization shows equivalent implementation; customization retained. Rebuild also restores TLS verification.
+plugins/tools/reload.py,different,equivalent,retained_equivalent_customization,Package/project/owner/support normalization shows equivalent implementation; customization retained.
+plugins/tools/song.py,different,substantive_difference,retained_custom_song_hardened,Custom song flows retained; rebuild restores TLS verification and supports optional authorized cookies.
+plugins/tools/speedtest.py,different,equivalent,retained_equivalent_customization,Package/project/owner/support normalization shows equivalent implementation; customization retained.
+plugins/tools/stats.py,different,substantive_difference,retained_custom_identity_ui,"Custom Dausa naming, callbacks, UI or media behavior retained; equivalent upstream implementation not overwritten."
+plugins/tools/sticker.py,different,equivalent,retained_equivalent_customization,Package/project/owner/support normalization shows equivalent implementation; customization retained.
+plugins/tools/telegraph.py,different,equivalent,retained_equivalent_customization,Package/project/owner/support normalization shows equivalent implementation; customization retained.
+plugins/tools/tiny.py,different,equivalent,retained_equivalent_customization,Package/project/owner/support normalization shows equivalent implementation; customization retained.
+plugins/tools/tr.py,different,equivalent,retained_equivalent_customization,Package/project/owner/support normalization shows equivalent implementation; customization retained.
+plugins/tools/upscale.py,different,equivalent,retained_equivalent_customization,Package/project/owner/support normalization shows equivalent implementation; customization retained.
+plugins/tools/vault.py,different,equivalent,retained_equivalent_customization,Package/project/owner/support normalization shows equivalent implementation; customization retained.
+plugins/tools/videoedit.py,different,substantive_difference,retained_custom_identity_ui,"Custom Dausa naming, callbacks, UI or media behavior retained; equivalent upstream implementation not overwritten."
+plugins/tools/waifu.py,different,equivalent,retained_equivalent_customization,Package/project/owner/support normalization shows equivalent implementation; customization retained.
+railway.json,custom_only,not_applicable,preserved_custom_only,"Customized-only source, documentation, test or asset retained; not an upstream omission."
+requirements.txt,different,substantive_difference,retained_compatible_dependencies_updated,PyPI search and HTTPX compatibility retained; upstream fork rejected; rebuild updates yt-dlp/Deno.
+runtime.txt,identical,exact,retained_identical,Byte-identical upstream/customized path retained.
+sample.env,different,not_applicable,retained_custom_binary,Custom binary/media asset preserved; upstream binary was not used to overwrite customization.
+scripts/check_public_providers.py,different,substantive_difference,retained_custom_validation,Custom provider validation script and branding retained.
+security.py,different,substantive_difference,retained_custom_security_hardened,Custom subprocess/secret hardening retained; rebuild also redacts COOKIE_URL.
+setup,different,substantive_difference,retained_safe_setup,Simple secret-safe setup retained; upstream required-cookie prompt and terminal secret summary not migrated.
+start,different,equivalent,retained_equivalent_customization,Package/project/owner/support normalization shows equivalent implementation; customization retained.
+strings/__init__.py,identical,exact,retained_identical,Byte-identical upstream/customized path retained.
+strings/helpers.py,identical,exact,retained_identical,Byte-identical upstream/customized path retained.
+strings/langs/ar.yml,different,substantive_difference,preserved_custom_branding,Localized DausaXmusic identity and official links retained.
+strings/langs/en.yml,different,substantive_difference,preserved_custom_branding,Localized DausaXmusic identity and official links retained.
+strings/langs/hi.yml,different,substantive_difference,preserved_custom_branding,Localized DausaXmusic identity and official links retained.
+strings/langs/ru.yml,different,substantive_difference,preserved_custom_branding,Localized DausaXmusic identity and official links retained.
+strings/langs/tr.yml,different,substantive_difference,preserved_custom_branding,Localized DausaXmusic identity and official links retained.
+tests/test_branding.py,custom_only,not_applicable,added_branding_regression_tests,Added regression checks for original developer identity strings and approved/runtime thumbnail artwork.
+tests/test_esse_autoplay.py,different,substantive_difference,retained_custom_tests,Custom ESSE/autoplay regression assertions retained.
+tests/test_git_availability.py,different,equivalent,retained_equivalent_customization,Package/project/owner/support normalization shows equivalent implementation; customization retained.
+tests/test_mmf.py,different,equivalent,retained_equivalent_customization,Package/project/owner/support normalization shows equivalent implementation; customization retained.
+tests/test_public_providers.py,different,equivalent,retained_equivalent_customization,Package/project/owner/support normalization shows equivalent implementation; customization retained.
+tests/test_rich_buttons.py,different,substantive_difference,retained_custom_tests,Custom rich-button branding assertions retained.
+tests/test_rich_navigation.py,different,equivalent,retained_equivalent_customization,Package/project/owner/support normalization shows equivalent implementation; customization retained.
+tests/test_sticker_pack_owner.py,different,equivalent,retained_equivalent_customization,Package/project/owner/support normalization shows equivalent implementation; customization retained.
+tests/test_thumbnails.py,different,substantive_difference,retained_custom_tests,Custom thumbnail/design assertions retained.
+tests/test_voiceplay_policy.py,different,equivalent,retained_equivalent_customization,Package/project/owner/support normalization shows equivalent implementation; customization retained.
+tests/test_voiceplay_stt.py,different,equivalent,retained_equivalent_customization,Package/project/owner/support normalization shows equivalent implementation; customization retained.
+tests/test_voiceplay_text.py,different,equivalent,retained_equivalent_customization,Package/project/owner/support normalization shows equivalent implementation; customization retained.
+tests/test_youtube_cookies.py,custom_only,not_applicable,added_cookie_regression_tests,"Added cookie security, redaction, YouTube integration, and failure-path regression tests."
+tests/test_youtube_direct.py,custom_only,not_applicable,preserved_custom_only,"Customized-only source, documentation, test or asset retained; not an upstream omission."
+tiny.png,custom_only,not_applicable,preserved_custom_only,"Customized-only source, documentation, test or asset retained; not an upstream omission."
+upic.png,custom_only,not_applicable,preserved_custom_only,"Customized-only source, documentation, test or asset retained; not an upstream omission."
+utils/__init__.py,identical,exact,retained_identical,Byte-identical upstream/customized path retained.
+utils/admin_check.py,identical,exact,retained_identical,Byte-identical upstream/customized path retained.
+utils/admin_filters.py,different,equivalent,retained_equivalent_customization,Package/project/owner/support normalization shows equivalent implementation; customization retained.
+utils/anime_images.py,different,substantive_difference,retained_custom_identity_ui,"Custom Dausa naming, callbacks, UI or media behavior retained; equivalent upstream implementation not overwritten."
+utils/channelplay.py,different,equivalent,retained_equivalent_customization,Package/project/owner/support normalization shows equivalent implementation; customization retained.
+utils/database.py,different,equivalent,retained_equivalent_customization,Package/project/owner/support normalization shows equivalent implementation; customization retained.
+utils/decorator.py,different,equivalent,retained_equivalent_customization,Package/project/owner/support normalization shows equivalent implementation; customization retained.
+utils/decorators/__init__.py,identical,exact,retained_identical,Byte-identical upstream/customized path retained.
+utils/decorators/admins.py,different,equivalent,retained_equivalent_customization,Package/project/owner/support normalization shows equivalent implementation; customization retained.
+utils/decorators/language.py,different,equivalent,retained_equivalent_customization,Package/project/owner/support normalization shows equivalent implementation; customization retained.
+utils/decorators/play.py,different,equivalent,retained_equivalent_customization,Package/project/owner/support normalization shows equivalent implementation; customization retained.
+utils/downloader.py,different,equivalent,retained_equivalent_customization,Package/project/owner/support normalization shows equivalent implementation; customization retained.
+utils/errors.py,different,substantive_difference,retained_custom_security,Custom error reporting and redaction retained.
+utils/esse_autoplay.py,identical,exact,retained_identical,Byte-identical upstream/customized path retained.
+utils/exceptions.py,identical,exact,retained_identical,Byte-identical upstream/customized path retained.
+utils/extraction.py,different,equivalent,retained_equivalent_customization,Package/project/owner/support normalization shows equivalent implementation; customization retained.
+utils/file_upload.py,different,equivalent,retained_equivalent_customization,Package/project/owner/support normalization shows equivalent implementation; customization retained.
+utils/files.py,identical,exact,retained_identical,Byte-identical upstream/customized path retained.
+utils/font_styles.py,identical,exact,retained_identical,Byte-identical upstream/customized path retained.
+utils/formatters.py,different,equivalent,retained_equivalent_customization,Package/project/owner/support normalization shows equivalent implementation; customization retained.
+utils/free_ai.py,different,substantive_difference,rebranded_ai_identity,"Preserved AI aliases, commands, providers, and behavior; replaced EliteGen/Siddhartha identity responses with DausaXmusic owner branding."
+utils/inline/__init__.py,identical,exact,retained_identical,Byte-identical upstream/customized path retained.
+utils/inline/extras.py,different,equivalent,retained_equivalent_customization,Package/project/owner/support normalization shows equivalent implementation; customization retained.
+utils/inline/help.py,different,equivalent,retained_equivalent_customization,Package/project/owner/support normalization shows equivalent implementation; customization retained.
+utils/inline/play.py,different,substantive_difference,retained_custom_identity_ui,"Custom Dausa naming, callbacks, UI or media behavior retained; equivalent upstream implementation not overwritten."
+utils/inline/queue.py,different,equivalent,retained_equivalent_customization,Package/project/owner/support normalization shows equivalent implementation; customization retained.
+utils/inline/settings.py,different,equivalent,retained_equivalent_customization,Package/project/owner/support normalization shows equivalent implementation; customization retained.
+utils/inline/song.py,different,equivalent,retained_equivalent_customization,Package/project/owner/support normalization shows equivalent implementation; customization retained.
+utils/inline/speed.py,different,equivalent,retained_equivalent_customization,Package/project/owner/support normalization shows equivalent implementation; customization retained.
+utils/inline/start.py,different,substantive_difference,preserved_custom_ui,Custom required buttons and branding retained.
+utils/inline/stats.py,different,equivalent,retained_equivalent_customization,Package/project/owner/support normalization shows equivalent implementation; customization retained.
+utils/inlinequery.py,identical,exact,retained_identical,Byte-identical upstream/customized path retained.
+utils/logger.py,different,equivalent,retained_equivalent_customization,Package/project/owner/support normalization shows equivalent implementation; customization retained.
+utils/lyrics.py,different,substantive_difference,retained_custom_identity_ui,"Custom Dausa naming, callbacks, UI or media behavior retained; equivalent upstream implementation not overwritten."
+utils/mmf.py,different,equivalent,retained_equivalent_customization,Package/project/owner/support normalization shows equivalent implementation; customization retained.
+utils/movie_lookup.py,different,substantive_difference,retained_custom_provider,Custom keyless public movie provider integration retained.
+utils/pastebin.py,different,substantive_difference,retained_custom_identity_ui,"Custom Dausa naming, callbacks, UI or media behavior retained; equivalent upstream implementation not overwritten."
+utils/permissions.py,different,equivalent,retained_equivalent_customization,Package/project/owner/support normalization shows equivalent implementation; customization retained.
+utils/rich_buttons.py,identical,exact,retained_identical,Byte-identical upstream/customized path retained.
+utils/socialdown.py,different,substantive_difference,retained_custom_provider,Custom social downloader identity and provider behavior retained.
+utils/sticker_packs.py,identical,exact,retained_identical,Byte-identical upstream/customized path retained.
+utils/stream/autoclear.py,different,equivalent,retained_equivalent_customization,Package/project/owner/support normalization shows equivalent implementation; customization retained.
+utils/stream/autodelete.py,different,equivalent,retained_equivalent_customization,Package/project/owner/support normalization shows equivalent implementation; customization retained.
+utils/stream/cards.py,different,equivalent,retained_equivalent_customization,Package/project/owner/support normalization shows equivalent implementation; customization retained.
+utils/stream/precache.py,different,equivalent,retained_equivalent_customization,Package/project/owner/support normalization shows equivalent implementation; customization retained.
+utils/stream/queue.py,different,equivalent,retained_equivalent_customization,Package/project/owner/support normalization shows equivalent implementation; customization retained.
+utils/stream/source_status.py,identical,exact,retained_identical,Byte-identical upstream/customized path retained.
+utils/stream/stream.py,different,substantive_difference,retained_custom_identity,Dausa paste handler and existing queue/stream behavior retained.
+utils/sys.py,different,equivalent,retained_equivalent_customization,Package/project/owner/support normalization shows equivalent implementation; customization retained.
+utils/thumbnail_renderer.py,different,substantive_difference,rebranded_module_documentation,Preserved the custom renderer unchanged except for removing an original developer name from its module docstring.
+utils/thumbnails.py,different,substantive_difference,rebranded_thumbnail_fallback,Preserved thumbnail behavior and existing assets; changed only the user-visible EliteMusic fallback to DausaXmusic.
+utils/tuning.py,different,substantive_difference,retained_custom_config,Blank-safe integer/environment tuning retained.
+utils/url_guard.py,identical,exact,retained_identical,Byte-identical upstream/customized path retained.
+utils/voiceplay.py,different,substantive_difference,retained_custom_identity_ui,"Custom Dausa naming, callbacks, UI or media behavior retained; equivalent upstream implementation not overwritten."
+utils/voiceplay_policy.py,identical,exact,retained_identical,Byte-identical upstream/customized path retained.
+utils/voiceplay_stt.py,identical,exact,retained_identical,Byte-identical upstream/customized path retained.
+utils/voiceplay_text.py,identical,exact,retained_identical,Byte-identical upstream/customized path retained.
+utils/youtube_cookies.py,custom_only,not_applicable,added_secure_cookie_support,"Added optional authorized-cookie loading with HTTPS-only SSRF controls, size limits, permissions, atomic writes, and secret redaction."

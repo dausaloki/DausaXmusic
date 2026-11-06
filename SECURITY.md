@@ -10,6 +10,7 @@ Do not post access tokens, session strings, API keys, database URIs, or exploit 
 ## Supported deployment practices
 
 - Keep `.env`, Telegram sessions, cookies and API keys private.
+- `COOKIE_URL` is optional and intended only for your own authorized Netscape cookie export over HTTPS. Never use a public paste or another person's session; no cookie file is bundled.
 - Rotate credentials that may have been exposed.
 - Use least-privilege Telegram permissions and private logging groups.
 - Keep MongoDB private and restrict network access.

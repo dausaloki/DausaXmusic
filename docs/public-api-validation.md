@@ -42,8 +42,10 @@ An additional pinned-SDK run verified the 360M chat fallback. The 31 live checks
 include image-processing and static-video fallbacks; this count does not mean
 every legacy API, advanced model or Telegram command was certified as working.
 
-Use the repository's declared dependencies, including Kurigram 2.2.26,
-gradio_client 2.6.0, rlottie-python 1.3.8 and yt-dlp 2026.7.4.
+The original provider validation used Kurigram 2.2.26, gradio_client 2.6.0,
+rlottie-python 1.3.8 and yt-dlp 2026.7.4. For the current rebuild, use the
+repository's declared dependencies, including yt-dlp 2026.10.26, Deno 2.9.8 and
+yt-dlp-ejs 0.8.0; see `COMPLETE_REBUILD_REPORT.md`.
 
 ```powershell
 python -m unittest discover -s tests -v
