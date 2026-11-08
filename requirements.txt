@@ -10,7 +10,7 @@ edge-tts
 gitpython
 gradio_client==2.6.0
 # 1.5.1 retains the Translator API used by plugins/tools/tr.py and supports HTTPX 0.27.
-gpytranslate==1.5.1
+gpytranslate==2.1.0
 gtts
 heroku3
 # youtube-search-python 1.6.6 still uses the HTTPX proxies= API removed in 0.28.
