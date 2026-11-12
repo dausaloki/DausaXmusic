@@ -16,7 +16,7 @@ heroku3
 # youtube-search-python 1.6.6 still uses the HTTPX proxies= API removed in 0.28.
 httpx[http2]==0.27.2
 indic-transliteration
-kurigram==2.2.26
+kurigram==2.2.27
 motor
 nekosbest
 numpy
